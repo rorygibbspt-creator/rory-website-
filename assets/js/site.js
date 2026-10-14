@@ -1,7 +1,7 @@
 /* Rory Gibbs OLY: small, dependency free site behaviour. */
 
 /*
- * Form delivery. Set ONE of these and every enquiry form on the site works.
+ * Form delivery. Set ONE of these and every form on the site works.
  *  - formEndpoint: a form service URL, e.g. "https://formspree.io/f/abcdwxyz"
  *  - email: an address; the visitor's own email app opens with the message filled in
  */
@@ -14,41 +14,11 @@ document.documentElement.classList.add("js");
 
 (() => {
   const header = document.querySelector(".site-header");
-  const progress = document.querySelector(".race-progress");
-  const metres = document.querySelector(".race-metres");
-  const hero = document.querySelector(".hero, .lumo-hero");
-  const bands = Array.from(document.querySelectorAll(".band img"));
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* Header turns solid once you leave the hero, and the gold line tracks a 2000m race. */
-  let ticking = false;
-  const onScroll = () => {
-    const y = window.scrollY;
-    const threshold = hero ? Math.max(hero.offsetHeight - 120, 80) : 40;
-    if (header) header.classList.toggle("is-solid", y > threshold || !hero);
-
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    const ratio = max > 0 ? Math.min(Math.max(y / max, 0), 1) : 0;
-    if (progress) progress.style.setProperty("--progress", ratio.toFixed(4));
-    if (metres) metres.textContent = `${Math.round(ratio * 2000).toLocaleString("en-GB")} / 2,000m`;
-
-    if (!reduceMotion) {
-      bands.forEach((img) => {
-        const rect = img.parentElement.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-        const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * -0.08;
-        img.style.setProperty("--parallax", `${offset.toFixed(1)}px`);
-      });
-    }
-    ticking = false;
-  };
-  window.addEventListener("scroll", () => {
-    if (!ticking) {
-      window.requestAnimationFrame(onScroll);
-      ticking = true;
-    }
-  }, { passive: true });
-  window.addEventListener("resize", onScroll);
+  /* Header gets a hairline once you scroll */
+  const onScroll = () => { if (header) header.classList.toggle("is-solid", window.scrollY > 8); };
+  window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
   /* Mobile menu */
@@ -59,11 +29,9 @@ document.documentElement.classList.add("js");
     if (toggle) {
       toggle.setAttribute("aria-expanded", String(open));
       const label = toggle.querySelector(".menu-label");
-      if (label) label.textContent = open ? "Close" : "Menu";
+      if (label) label.textContent = open ? "Close menu" : "Open menu";
     }
     if (menu) menu.toggleAttribute("inert", !open);
-    if (header && open) header.classList.add("is-solid");
-    if (!open) onScroll();
   };
   if (menu) menu.setAttribute("inert", "");
   if (toggle) toggle.addEventListener("click", () => setMenu(!document.documentElement.classList.contains("menu-open")));
@@ -86,19 +54,34 @@ document.documentElement.classList.add("js");
     reveals.forEach((el) => el.classList.add("is-in"));
   }
 
-  /* Duplicate the logo strip so the marquee loops seamlessly. */
-  document.querySelectorAll(".logos__track").forEach((track) => {
-    Array.from(track.children).forEach((node) => {
-      const clone = node.cloneNode(true);
-      clone.setAttribute("aria-hidden", "true");
-      track.appendChild(clone);
+  /* Carousel arrows */
+  document.querySelectorAll("[data-carousel]").forEach((nav) => {
+    const track = document.getElementById(nav.dataset.carousel);
+    if (!track) return;
+    nav.querySelectorAll("button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const step = track.querySelector("figure")?.getBoundingClientRect().width || 300;
+        track.scrollBy({ left: (btn.dataset.dir === "prev" ? -1 : 1) * (step + 14), behavior: reduceMotion ? "auto" : "smooth" });
+      });
+    });
+  });
+
+  /* Athlete A or Athlete B */
+  document.querySelectorAll("[data-ab]").forEach((block) => {
+    const choices = block.querySelectorAll(".ab__choice");
+    const results = block.querySelectorAll(".ab__result");
+    choices.forEach((choice) => {
+      choice.addEventListener("click", () => {
+        choices.forEach((c) => c.setAttribute("aria-pressed", String(c === choice)));
+        results.forEach((r) => { r.hidden = r.dataset.kind !== choice.dataset.kind; });
+      });
     });
   });
 
   /* Footer year */
   document.querySelectorAll("[data-year]").forEach((el) => { el.textContent = new Date().getFullYear(); });
 
-  /* Enquiry forms */
+  /* Forms */
   document.querySelectorAll("form[data-form]").forEach((form) => {
     const status = form.querySelector(".form-status");
     const button = form.querySelector("button[type=submit]");
@@ -108,7 +91,7 @@ document.documentElement.classList.add("js");
       e.preventDefault();
       if (!form.reportValidity()) return;
       const data = new FormData(form);
-      const subject = `${form.dataset.form} enquiry from ${data.get("name") || "the website"}`;
+      const subject = `${form.dataset.form} from ${data.get("name") || data.get("email") || "the website"}`;
       data.append("_subject", subject);
 
       if (SITE_CONFIG.formEndpoint) {
@@ -122,9 +105,9 @@ document.documentElement.classList.add("js");
           });
           if (!res.ok) throw new Error(String(res.status));
           form.reset();
-          say("Thanks, that's with me. I'll reply personally, usually within a day.");
+          say(form.dataset.success || "Thanks, that's with me. I'll reply personally, usually within a day.");
         } catch (err) {
-          say("That didn't send. Please try again, or message me on Instagram or LinkedIn.");
+          say("That didn't send. Please try again, or message me on Instagram.");
         } finally {
           if (button) button.disabled = false;
         }
@@ -143,7 +126,7 @@ document.documentElement.classList.add("js");
         return;
       }
 
-      say("The form isn't connected yet. Please message me on Instagram or LinkedIn in the meantime.");
+      say("This form isn't connected yet. Please message me on Instagram in the meantime.");
     });
   });
 })();

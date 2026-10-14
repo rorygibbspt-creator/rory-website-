@@ -7,26 +7,27 @@ A fast, static rebuild of the Rory Gibbs OLY website. Plain HTML, one stylesheet
 | URL | File |
 | --- | --- |
 | `/` | `index.html` |
+| `/deck` | `deck.html` (the Athlete Deck and its waitlist) |
+| `/book` | `book.html` |
+| `/parents` | `parents.html` |
 | `/mentoring` | `mentoring.html` |
-| `/speaking` | `speaking.html` |
-| `/workshops` | `workshops.html` |
-| `/course` | `course.html` |
-| `/shop` | `shop.html` |
-| `/lumo` | `lumo.html` |
+| `/about` | `about.html` |
 | `/contact` | `contact.html` |
 
-`vercel.json` turns on clean URLs, so `/speaking` serves `speaking.html`.
+`vercel.json` turns on clean URLs, so `/deck` serves `deck.html`.
 
 ## Look and feel
 
-- Colours, fonts and spacing live at the top of `assets/css/site.css` as variables.
-- Headlines: Big Shoulders Display. Body: Instrument Sans. Accent words: Instrument Serif italic.
-- Palette: deep river navy, chalk white and one medal gold.
-- The thin gold line under the header fills as you scroll, and on wide screens a counter shows your progress through a 2,000m race.
+The design matches the Instagram posts and the Athlete Deck: warm paper, navy text, coral for the word that
+matters, and soft sage, sky and blush panels. One typeface, Plus Jakarta Sans. Colours and spacing are variables
+at the top of `assets/css/site.css`.
+
+Instagram post images live in `assets/img/`. To add a new carousel, copy one of the `carousel` blocks on the
+homepage or parents page and swap the images.
 
 ## Photos
 
-Pages use the same image paths as the current site (`/images/...`, `/logos/...`, `/personal/...`).
+A few pages use photos from the current site (`/images/...`, `/personal/...`).
 Until those folders are copied into this repo, `vercel.json` fetches them from the live rorygibbs.com.
 
 **Before pointing rorygibbs.com at this site**, copy the `public/images`, `public/logos` and `public/personal`
@@ -40,7 +41,7 @@ Every form is handled by `assets/js/site.js`. Fill in one setting at the top of 
 - `formEndpoint`: a form service URL (for example a free Formspree form). Messages land in your inbox.
 - `email`: your address. The visitor's email app opens with their message filled in.
 
-Until one is set, the forms tell visitors to get in touch on Instagram or LinkedIn instead.
+Until one is set, the forms tell visitors to message on Instagram instead.
 
 ## Editing
 
