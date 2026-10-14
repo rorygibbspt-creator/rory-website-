@@ -9,7 +9,9 @@ A fast, static rebuild of the Rory Gibbs OLY website. Plain HTML, one stylesheet
 | `/` | `index.html` |
 | `/deck` | `deck.html` (the Athlete Deck and its waitlist) |
 | `/book` | `book.html` |
+| `/courses` | `courses.html` (sport specific courses, coming soon, with a waitlist vote) |
 | `/parents` | `parents.html` |
+| `/schools` | `schools.html` (seminars for schools and clubs) |
 | `/mentoring` | `mentoring.html` |
 | `/about` | `about.html` |
 | `/contact` | `contact.html` |
@@ -18,12 +20,22 @@ A fast, static rebuild of the Rory Gibbs OLY website. Plain HTML, one stylesheet
 
 ## Look and feel
 
-The design matches the Instagram posts and the Athlete Deck: warm paper, navy text, coral for the word that
-matters, and soft sage, sky and blush panels. One typeface, Plus Jakarta Sans. Colours and spacing are variables
-at the top of `assets/css/site.css`.
+Matches the Instagram posts and the Athlete Deck: warm paper, navy, coral for the key word, and soft sage, sky
+and blush panels. Rounded type (Nunito) like the cards. Colours and spacing are variables at the top of
+`assets/css/site.css`.
 
-Instagram post images live in `assets/img/`. To add a new carousel, copy one of the `carousel` blocks on the
-homepage or parents page and swap the images.
+## Motion
+
+All animation is hand written in `assets/js/site.js`, with no libraries.
+
+- A card dealing loader on the first page view of each visit.
+- Headlines rise in word by word (`data-split`). Blocks fade, pop or slide in (`reveal`, `pop`, `from-left`, `from-right`).
+- The page background changes colour per section (`data-bg="sky"` and so on).
+- `data-scrub` gives an element a `--p` value from 0 to 1 as it scrolls past, used for the trail, the book tilt, the phone and spinning shapes.
+- The deck cards fan out as you scroll on desktop and become a swipeable row on phones. Tap to flip.
+- Visitors who ask their device for reduced motion get a calm, static version.
+
+Instagram post images live in `assets/img/`.
 
 ## Photos
 

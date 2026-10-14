@@ -12,13 +12,29 @@
 <meta property="og:image" content="/assets/img/deck-box.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<script>try{var d=document.documentElement;d.classList.add('js');if(!sessionStorage.getItem('rg-loaded')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('show-loader')}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap">
 <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
+<div class="loader" aria-hidden="true">
+  <div class="loader__inner">
+    <div class="loader__deck">
+      <div class="loader__card"><span class="icon--sage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="4.5" r="2"/><path d="M6 21l4-6 3 2 1 4M8 12l3-4 4 2 3 3M11 8l-4 1-2 3"/></svg></span></div>
+      <div class="loader__card"><span class="icon--sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21v-3H6a2 2 0 0 1-2-2v-3l-2-1 2-4a7 7 0 0 1 14 2c0 2-1 3.5-2 4.5V21"/><path d="M13 7v2M16 9l-1.5 1.5M10 9l1.5 1.5"/></svg></span></div>
+      <div class="loader__card"><span class="icon--blush icon--coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V14M10 20V9M16 20V5M3 20h18"/></svg></span></div>
+      <div class="loader__card"><span class="icon--blush"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span></div>
+      <div class="loader__card"><span class="icon--sun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="9.5" r="2.2"/><path d="M2.5 20a5.5 5.5 0 0 1 11 0M13.5 20a3.6 3.6 0 0 1 7.2 0"/></svg></span></div>
+    </div>
+    <div class="loader__brand">Rory Gibbs <sup>OLY</sup></div>
+    <div class="loader__words"><span>Think better.</span><span>Train better.</span><span>Respond better.</span></div>
+    <div class="loader__bar"><i></i></div>
+    <div class="loader__count">0%</div>
+  </div>
+</div>
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="/" aria-label="Rory Gibbs OLY, home">Rory Gibbs <sup>OLY</sup></a>
@@ -26,8 +42,9 @@
       <ul>
         <li><a href="/deck">The Deck</a></li>
         <li><a href="/book">The Book</a></li>
-        <li><a href="/parents">For Parents</a></li>
-        <li><a href="/mentoring" aria-current="page">Mentoring</a></li>
+        <li><a href="/courses">Courses</a></li>
+        <li><a href="/parents">Parents</a></li>
+        <li><a href="/schools">Schools</a></li>
         <li><a href="/about">About</a></li>
       </ul>
     </nav>
@@ -44,9 +61,11 @@
     <ul>
       <li><a href="/deck"><span class="dot icon--sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="12" height="15" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v13"/></svg></span>The Deck<small>Coming soon</small></a></li>
       <li><a href="/book"><span class="dot icon--sage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7"/></svg></span>The Book<small>Out now</small></a></li>
-      <li><a href="/parents"><span class="dot icon--blush"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="9.5" r="2.2"/><path d="M2.5 20a5.5 5.5 0 0 1 11 0M13.5 20a3.6 3.6 0 0 1 7.2 0"/></svg></span>For Parents<small>How to help</small></a></li>
-      <li><a href="/mentoring" aria-current="page"><span class="dot icon--sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg></span>Mentoring<small>1:1</small></a></li>
-      <li><a href="/about"><span class="dot icon--sage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="15" r="5.5"/><path d="M8.5 10.5 5 3h5l2 4 2-4h5l-3.5 7.5"/><path d="m12 12.6.9 1.8 2 .3-1.4 1.4.3 2-1.8-1-1.8 1 .3-2-1.4-1.4 2-.3z"/></svg></span>About<small>My story</small></a></li>
+      <li><a href="/courses"><span class="dot icon--sun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="14" rx="3"/><path d="m10 8.5 5 2.5-5 2.5z"/><path d="M8 21h8"/></svg></span>Courses<small>Every sport</small></a></li>
+      <li><a href="/parents"><span class="dot icon--blush"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="9.5" r="2.2"/><path d="M2.5 20a5.5 5.5 0 0 1 11 0M13.5 20a3.6 3.6 0 0 1 7.2 0"/></svg></span>Parents<small>How to help</small></a></li>
+      <li><a href="/schools"><span class="dot icon--sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.2V16c0 1.4 2.2 3 5 3s5-1.6 5-3v-4.8M21 9v5"/></svg></span>Schools<small>Seminars</small></a></li>
+      <li><a href="/mentoring" aria-current="page"><span class="dot icon--sage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg></span>Mentoring<small>1:1</small></a></li>
+      <li><a href="/about"><span class="dot icon--blush"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="15" r="5.5"/><path d="M8.5 10.5 5 3h5l2 4 2-4h5l-3.5 7.5"/></svg></span>About<small>My story</small></a></li>
     </ul>
   </div>
   <div class="wrap menu-foot">
@@ -55,107 +74,93 @@
 </div>
 
 <main id="main">
-<section class="hero">
+<section class="hero" data-bg="paper">
   <div class="wrap split">
     <div class="stack" style="gap:24px">
-      <span class="tag">Mentoring &middot; Ages 14 to 22</span>
-      <h1>Think like an <span class="coral">Olympic champion.</span></h1>
-      <p class="lead">One to one mentoring for ambitious young athletes in any sport. I only work with a handful of athletes at a time, so each one gets my full attention.</p>
-      <div class="btn-row">
+      <span class="tag reveal">Mentoring &middot; Ages 14 to 22</span>
+      <h1 data-split>Think like an <span class="coral">Olympic champion.</span></h1>
+      <p class="lead reveal" style="--d:250">One to one mentoring for ambitious young athletes in any sport. I only work with a handful of athletes at a time, so each one gets my full attention.</p>
+      <div class="btn-row reveal" style="--d:400">
         <a class="btn" href="#apply">Apply for a place <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
         <a class="btn btn--soft" href="#how">How it works</a>
       </div>
     </div>
-    <div class="portrait reveal"><img src="/personal/coaching.webp" alt="Rory coaching a young athlete" fetchpriority="high"></div>
+    <div class="portrait pop" data-scrub><img src="/personal/coaching.webp" alt="Rory coaching a young athlete" fetchpriority="high"></div>
   </div>
 </section>
 
-<section class="section" style="padding-top:0">
+<section class="section" data-bg="sky">
   <div class="wrap">
-    <div class="stack center reveal" style="text-align:center;margin-bottom:36px">
-      <span class="tag tag--sage">What we work on</span>
-      <h2><span class="burst">The complete <span class="coral">athlete</span></span></h2>
-      <p class="lead" style="margin-inline:auto">Each week we take one skill or value and go deep on it, so it sticks.</p>
+    <div class="head">
+      <span class="tag tag--card reveal">What we work on</span>
+      <h2 data-split><span class="burst">The complete <span class="coral">athlete</span></span></h2>
+      <p class="lead reveal">Each week we take one skill or value and go deep on it, so it sticks.</p>
     </div>
-    <div class="tiles tiles--3">
-      <div class="tile tile--sky reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21v-3H6a2 2 0 0 1-2-2v-3l-2-1 2-4a7 7 0 0 1 14 2c0 2-1 3.5-2 4.5V21"/><path d="M13 7v2M16 9l-1.5 1.5M10 9l1.5 1.5"/></svg></span><h3>Mindset under pressure</h3><p>Nerves, self talk and identity. Performing when it matters instead of freezing.</p></div>
-      <div class="tile tile--sage reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="4.5" r="2"/><path d="M6 21l4-6 3 2 1 4M8 12l3-4 4 2 3 3M11 8l-4 1-2 3"/></svg></span><h3>Strength &amp; physical base</h3><p>Holiday programmes built around your sport, so you go back fitter and stronger.</p></div>
-      <div class="tile tile--blush reveal"><span class="icon icon--coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg></span><h3>Competition prep</h3><p>Routines and race plans that make a big day feel like any other day.</p></div>
-      <div class="tile tile--blush reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></span><h3>Consistency &amp; habits</h3><p>How to be excellent on the days you don't feel like it.</p></div>
-      <div class="tile tile--sky reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10A4.5 4.5 0 0 1 12 7.2 4.5 4.5 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg></span><h3>Character &amp; values</h3><p>Kindness, communication and accountability. The skills that decide long careers.</p></div>
-      <div class="tile tile--sage reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span><h3>Selection &amp; setbacks</h3><p>Injuries, not getting picked and working with coaches.</p></div>
+    <div class="tiles tiles--3" data-stagger>
+      <div class="tile pop is-hoverable"><span class="icon icon--sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21v-3H6a2 2 0 0 1-2-2v-3l-2-1 2-4a7 7 0 0 1 14 2c0 2-1 3.5-2 4.5V21"/><path d="M13 7v2M16 9l-1.5 1.5M10 9l1.5 1.5"/></svg></span><h3>Mindset under pressure</h3><p>Nerves, self talk and identity. Performing when it matters.</p></div>
+      <div class="tile pop is-hoverable"><span class="icon icon--sage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="4.5" r="2"/><path d="M6 21l4-6 3 2 1 4M8 12l3-4 4 2 3 3M11 8l-4 1-2 3"/></svg></span><h3>Strength &amp; physical base</h3><p>Holiday programmes built around your sport.</p></div>
+      <div class="tile pop is-hoverable"><span class="icon icon--blush icon--coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg></span><h3>Competition prep</h3><p>Routines that make a big day feel like any other day.</p></div>
+      <div class="tile pop is-hoverable"><span class="icon icon--sun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></span><h3>Consistency &amp; habits</h3><p>Excellent on the days you don't feel like it.</p></div>
+      <div class="tile pop is-hoverable"><span class="icon icon--blush"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10A4.5 4.5 0 0 1 12 7.2 4.5 4.5 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg></span><h3>Character &amp; values</h3><p>The skills that decide long careers.</p></div>
+      <div class="tile pop is-hoverable"><span class="icon icon--sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span><h3>Selection &amp; setbacks</h3><p>Injuries, not getting picked and working with coaches.</p></div>
     </div>
   </div>
 </section>
 
-<section class="section" id="how" style="padding-top:0">
+<section class="section" id="how" data-bg="sage">
   <div class="wrap split">
-    <div class="stack reveal">
-      <span class="tag tag--blush">How it works</span>
-      <h2>Structured, personal, <span class="coral">built around your week.</span></h2>
-      <p class="muted">Online or in person. Local to me, we can train together. If not, we do it online.</p>
+    <div class="stack">
+      <span class="tag tag--card reveal">How it works</span>
+      <h2 data-split>Built around <span class="coral">your week.</span></h2>
+      <p class="muted reveal">Online or in person. Local to me, we can train together. If not, we do it online.</p>
     </div>
-    <ul class="steps reveal">
-      <li><span class="num">1</span><div><strong>Free discovery call</strong><span>We talk through your goals and whether it's a good fit.</span></div></li>
-      <li><span class="num">2</span><div><strong>Weekly check in</strong><span>Training load, mood, energy, sleep and heart rate. We start from where you are.</span></div></li>
-      <li><span class="num">3</span><div><strong>One key skill</strong><span>A single value or skill each session, in depth.</span></div></li>
-      <li><span class="num">4</span><div><strong>Holiday programmes</strong><span>A bespoke physical plan for your sport when school's out.</span></div></li>
+    <ul class="steps" data-stagger style="width:100%">
+      <li class="pop"><span class="num">1</span><div><strong>Free discovery call</strong><span>We talk through your goals and whether it's a good fit.</span></div></li>
+      <li class="pop"><span class="num">2</span><div><strong>Weekly check in</strong><span>Training load, mood, energy, sleep and heart rate.</span></div></li>
+      <li class="pop"><span class="num">3</span><div><strong>One key skill</strong><span>A single value or skill each session, in depth.</span></div></li>
+      <li class="pop"><span class="num">4</span><div><strong>Holiday programmes</strong><span>A bespoke physical plan when school's out.</span></div></li>
     </ul>
   </div>
 </section>
 
-<section class="section" style="padding-top:0">
+<section class="section" data-bg="paper">
   <div class="wrap">
-    <div class="tiles">
-      <div class="tile tile--sky reveal" style="padding:32px"><span class="tag" style="background:var(--card)">Also available</span><h3 style="font-size:var(--step-2)">The two day experience</h3><p>No time for weekly sessions? Spend a day or two with me. Gym work, the mindset side and an honest conversation about where you want to take your sport. A great way to start.</p><a class="link" href="#apply">Enquire about a day <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
-      <div class="tile tile--sage reveal" style="padding:32px"><span class="tag" style="background:var(--card)">Programme &middot; &pound;49.99</span><h3 style="font-size:var(--step-2)">One month weights programme</h3><p>A strict one month strength programme with 8RM testing before and after. I did it every summer holiday for years.</p><a class="link" href="https://payhip.com/b/Yco0a" target="_blank" rel="noopener">Buy on Payhip <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+    <div class="tiles" data-stagger>
+      <div class="tile tile--sky pop" style="padding:32px"><span class="tag tag--card">Also available</span><h3 style="font-size:var(--step-2)">The two day experience</h3><p>No time for weekly sessions? Spend a day or two with me. Gym work, the mindset side and an honest conversation about where you want to take your sport.</p><a class="link" href="#apply">Enquire about a day <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+      <div class="tile tile--sage pop" style="padding:32px"><span class="tag tag--card">Programme &middot; &pound;49.99</span><h3 style="font-size:var(--step-2)">One month weights programme</h3><p>A strict one month strength programme with 8RM testing before and after. I did it every summer holiday for years.</p><a class="link" href="https://payhip.com/b/Yco0a" target="_blank" rel="noopener">Buy on Payhip <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+    </div>
+    <div class="quotes" data-stagger style="margin-top:14px">
+      <figure class="quote pop"><blockquote>Rory introduced me to weightlifting and taught me how to actually think on the start line instead of panicking, which was something I was really struggling with.</blockquote><figcaption><b>Tom C.</b><span>Mentee, age 16</span></figcaption></figure>
+      <figure class="quote pop"><blockquote>The weekly structure gave my daughter something she'd never had: accountability, and directly from an Olympic champion, someone she actually looks up to. Game-changing.</blockquote><figcaption><b>Rachel Kemp</b><span>Parent of a junior rower</span></figcaption></figure>
+      <figure class="quote pop"><blockquote>Worth every penny. My son is a young rugby player. Rory introduced him to weightlifting and treats the mental side as seriously as the physical, which no one else around us was doing.</blockquote><figcaption><b>Mark Patel</b><span>Parent, mentoring client</span></figcaption></figure>
     </div>
   </div>
 </section>
 
-<section class="section" style="padding-top:0">
-  <div class="wrap">
-    <div class="quotes">
-      <figure class="quote reveal">
-        <blockquote>Rory introduced me to weightlifting and taught me how to actually think on the start line instead of panicking, which was something I was really struggling with.</blockquote>
-        <figcaption><b>Tom C.</b><span>Mentee, age 16</span></figcaption>
-      </figure>
-      <figure class="quote reveal">
-        <blockquote>The weekly structure gave my daughter something she'd never had: accountability, and directly from an Olympic champion, someone she actually looks up to. Game-changing.</blockquote>
-        <figcaption><b>Rachel Kemp</b><span>Parent of a junior rower</span></figcaption>
-      </figure>
-      <figure class="quote reveal">
-        <blockquote>Worth every penny. My son is a young rugby player. Rory introduced him to weightlifting and treats the mental side as seriously as the physical, which no one else around us was doing.</blockquote>
-        <figcaption><b>Mark Patel</b><span>Parent, mentoring client</span></figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<section class="section" style="padding-top:0">
+<section class="section" data-bg="sky">
   <div class="wrap split" style="align-items:start">
-    <div class="stack reveal">
-      <span class="tag">Questions</span>
-      <h2>Mentoring, <span class="coral">answered.</span></h2>
+    <div class="stack">
+      <span class="tag tag--card reveal">Questions</span>
+      <h2 data-split>Mentoring, <span class="coral">answered.</span></h2>
     </div>
     <div class="faq reveal">
       <details open><summary>Who is it for?</summary><div>Athletes aged 14 to 22 in any sport, from those aiming to represent their country to those who simply want to improve and enjoy it more. Most of my athletes are rowers, but the principles carry across every sport.</div></details>
       <details><summary>Why is there an application?</summary><div>I keep numbers small so every athlete gets my full attention. That's why places are by application rather than instant sign up.</div></details>
       <details><summary>What does it cost?</summary><div>It's bespoke, so it depends on what you need. We'll talk it through on a short, free discovery call, or I can email my pricing over.</div></details>
-      <details><summary>Can parents be involved?</summary><div>Yes. Parents are welcome on the discovery call, and I'm happy to keep you in the loop as we go.</div></details>
+      <details><summary>Can parents get in touch?</summary><div>Yes. Plenty of enquiries come from parents, so feel free to fill in the form for your athlete.</div></details>
     </div>
   </div>
 </section>
 
-<section class="section" id="apply" style="padding-top:0">
+<section class="section" id="apply" data-bg="blush">
   <div class="wrap">
-    <div class="panel panel--blush split reveal" style="align-items:start">
+    <div class="panel split" style="align-items:start">
       <div class="stack">
         <span class="tag tag--coral">Apply</span>
-        <h2>Let's see if <span class="coral">it's a fit.</span></h2>
-        <p class="muted">A few details and I'll be in touch to arrange a free discovery call. Parents, feel free to fill this in for your athlete.</p>
+        <h2 data-split>Let's see if <span class="coral">it's a fit.</span></h2>
+        <p class="muted reveal">A few details and I'll be in touch to arrange a free discovery call.</p>
       </div>
-      <form class="form" id="mentoring" data-form="Mentoring application" novalidate>
+      <form class="form reveal" id="mentoring" data-form="Mentoring application" novalidate>
         <div class="pair">
           <div class="field"><label for="mentoring-name">Athlete name</label><input id="mentoring-name" name="name" autocomplete="name" required></div>
           <div class="field"><label for="mentoring-age">Age</label><input id="mentoring-age" name="age" inputmode="numeric"></div>
@@ -175,17 +180,20 @@
 
 <footer class="site-footer">
   <div class="wrap">
+    <p class="footer-big" data-split>Built, <span class="coral">not born.</span></p>
     <div class="footer-top">
-      <div class="stack">
+      <div class="stack-sm">
         <a href="/" class="footer-brand">Rory Gibbs <sup>OLY</sup></a>
-        <p style="color:rgba(255,255,255,.72);max-width:36ch">Olympic champion, Paris 2024. Helping young athletes of every sport, and the parents and coaches behind them.</p>
+        <p style="color:rgba(255,255,255,.75);max-width:38ch;margin-inline:auto 0">Olympic champion, Paris 2024. Mindset content, tools and courses for young athletes of every sport, and the parents behind them.</p>
       </div>
       <div class="footer-col">
         <h4>Explore</h4>
         <ul>
           <li><a href="/deck">The Athlete Deck</a></li>
           <li><a href="/book">The book</a></li>
+          <li><a href="/courses">Courses</a></li>
           <li><a href="/parents">For parents</a></li>
+          <li><a href="/schools">Schools &amp; clubs</a></li>
           <li><a href="/mentoring">Mentoring</a></li>
           <li><a href="/about">About me</a></li>
           <li><a href="/contact">Contact</a></li>
@@ -207,6 +215,19 @@
     </div>
   </div>
 </footer>
+
+<div class="quick">
+  <div class="quick__sheet" role="menu">
+    <p>Jump to</p>
+    <a href="/deck#waitlist" role="menuitem"><span class="icon icon--sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="12" height="15" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v13"/></svg></span>Athlete Deck waitlist</a>
+    <a href="/book" role="menuitem"><span class="icon icon--sage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7"/></svg></span>The book</a>
+    <a href="/courses" role="menuitem"><span class="icon icon--sun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="14" rx="3"/><path d="m10 8.5 5 2.5-5 2.5z"/><path d="M8 21h8"/></svg></span>Courses for your sport</a>
+    <a href="/parents" role="menuitem"><span class="icon icon--blush"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="9.5" r="2.2"/><path d="M2.5 20a5.5 5.5 0 0 1 11 0M13.5 20a3.6 3.6 0 0 1 7.2 0"/></svg></span>Help for parents</a>
+    <a href="/schools" role="menuitem"><span class="icon icon--sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.2V16c0 1.4 2.2 3 5 3s5-1.6 5-3v-4.8M21 9v5"/></svg></span>Book a school seminar</a>
+    <a href="https://www.instagram.com/rorygibbsoly/" target="_blank" rel="noopener" role="menuitem"><span class="icon icon--blush icon--coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></span>Follow on Instagram</a>
+  </div>
+  <button class="quick__btn" type="button" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Quick links</button>
+</div>
 
 <script src="/assets/js/site.js" defer></script>
 </body>
