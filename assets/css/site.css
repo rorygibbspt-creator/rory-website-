@@ -709,3 +709,67 @@ a.tile:hover, .tile.is-hoverable:hover { transform: translateY(-6px) rotate(-1de
 
 .head .rotator span { justify-self: center; }
 @media (max-width: 919px) { .rotator span { justify-self: center; } }
+
+/* ==========================================================================
+   Illustrated hybrid: real cards in the loader, Rory as a character
+   ========================================================================== */
+
+/* Loader deals the real Instagram cards */
+.loader__deck { width: 136px; height: 170px; }
+.loader__card { padding: 0; overflow: hidden; border-radius: 14px; background: var(--card); }
+.loader__card img { width: 100%; height: 100%; object-fit: cover; }
+.loader__card:nth-child(5) img { object-fit: contain; background: var(--card); }
+
+/* The character */
+.rory { width: 100%; height: auto; overflow: visible; }
+.rory__body { animation: breathe 4.2s ease-in-out infinite; transform-box: view-box; transform-origin: 205px 560px; }
+.rory__oar, .rory__front { transform-box: view-box; transform-origin: 170px 380px; animation: sway 4.2s ease-in-out infinite; }
+.rory__eyes { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; }
+.rory__head { transform-box: view-box; transform-origin: 205px 160px; animation: nod 8.4s ease-in-out infinite; }
+.rory__shadow { transform-box: fill-box; transform-origin: center; animation: shadow 4.2s ease-in-out infinite; }
+@keyframes breathe { 50% { transform: translateY(-6px) scaleY(1.01); } }
+@keyframes sway { 0%, 100% { transform: rotate(-2.5deg) translateY(0); } 50% { transform: rotate(2deg) translateY(-6px); } }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+@keyframes nod { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-3deg); } 60% { transform: rotate(2deg); } }
+@keyframes shadow { 50% { transform: scaleX(0.92); opacity: 0.08; } }
+
+/* Hero stage with Rory centre and the deck beside him */
+.stage--rory { min-height: 460px; }
+.stage--rory .stage__blob { width: min(92%, 500px); }
+.stage__rory { position: relative; z-index: 2; width: min(78%, 400px); transition: transform 0.4s var(--ease); }
+.stage__deck {
+  position: absolute; z-index: 3; left: 0; bottom: 8%;
+  width: min(34%, 170px);
+  filter: drop-shadow(0 22px 26px rgba(23, 50, 74, 0.28));
+  animation: float 5.4s ease-in-out infinite;
+  transform: rotate(-8deg);
+}
+.stage__card {
+  position: absolute; z-index: 1; left: 2%; top: 4%;
+  width: min(28%, 140px);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  animation: float 6.2s ease-in-out -2s infinite;
+  rotate: -8deg;
+}
+.stage--rory .orbit { z-index: 4; }
+.stage--rory .hero__badge { z-index: 5; }
+@media (max-width: 600px) {
+  .stage--rory { min-height: 400px; }
+  .stage__rory { width: 72%; }
+}
+
+/* A speech bubble that pops in beside the character */
+.bubble {
+  position: absolute; z-index: 5; right: 2%; top: 34%;
+  padding: 10px 16px; border-radius: 18px 18px 18px 4px;
+  background: var(--ink); color: #fff; font-weight: 900; font-size: 0.95rem; white-space: nowrap;
+  box-shadow: var(--shadow);
+  animation: bubble 7s var(--spring) 1.2s infinite both;
+}
+.bubble span { color: #ffb3a8; }
+@keyframes bubble { 0% { transform: scale(0); } 8%, 70% { transform: scale(1); } 78%, 100% { transform: scale(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .rory__body, .rory__oar, .rory__front, .rory__eyes, .rory__head, .rory__shadow, .bubble { animation: none; }
+}
