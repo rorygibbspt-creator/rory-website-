@@ -77,7 +77,7 @@ const SITE_CONFIG = {
   });
 
   /* ---------- Reveal on scroll ---------- */
-  const revealables = document.querySelectorAll(".reveal, .pop, .from-left, .from-right, [data-split], [data-count]");
+  const revealables = document.querySelectorAll(".reveal, .pop, .from-left, .from-right, .draw, [data-split], [data-count]");
   const countUp = (el) => {
     const target = parseFloat(el.dataset.count);
     const suffix = el.dataset.suffix || "";
@@ -243,6 +243,36 @@ const SITE_CONFIG = {
       btn.addEventListener("pointerleave", () => { btn.style.transform = ""; });
     });
   }
+
+  /* ---------- Layered scene: each layer moves at its own depth ---------- */
+  if (finePointer && !reduceMotion) {
+    document.querySelectorAll("[data-scene]").forEach((scene) => {
+      const layers = scene.querySelectorAll("[data-depth]");
+      scene.addEventListener("pointermove", (e) => {
+        const r = scene.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        layers.forEach((l) => {
+          const d = parseFloat(l.dataset.depth);
+          l.style.translate = `${(-x * d).toFixed(1)}px ${(-y * d * 0.5).toFixed(1)}px`;
+        });
+      });
+      scene.addEventListener("pointerleave", () => layers.forEach((l) => { l.style.translate = ""; }));
+    });
+  }
+
+  /* ---------- App menu: items take turns lighting up ---------- */
+  document.querySelectorAll(".appmenu").forEach((menuEl) => {
+    const items = Array.from(menuEl.children);
+    items.forEach((li, k) => li.style.setProperty("--i", k));
+    if (reduceMotion || items.length < 2) return;
+    let k = 0;
+    setInterval(() => {
+      items.forEach((li) => li.classList.remove("is-active"));
+      items[k % items.length].classList.add("is-active");
+      k++;
+    }, 1400);
+  });
 
   /* ---------- Deck cards flip ---------- */
   document.querySelectorAll(".pcard").forEach((card) => {

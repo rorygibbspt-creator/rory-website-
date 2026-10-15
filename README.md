@@ -8,6 +8,7 @@ A fast, static rebuild of the Rory Gibbs OLY website. Plain HTML, one stylesheet
 | --- | --- |
 | `/` | `index.html` |
 | `/deck` | `deck.html` (the Athlete Deck and its waitlist) |
+| `/app` | `app.html` (the Athlete App, coming soon, with a waitlist) |
 | `/book` | `book.html` |
 | `/courses` | `courses.html` (sport specific courses, coming soon, with a waitlist vote) |
 | `/parents` | `parents.html` |
@@ -17,6 +18,16 @@ A fast, static rebuild of the Rory Gibbs OLY website. Plain HTML, one stylesheet
 | `/contact` | `contact.html` |
 
 `vercel.json` turns on clean URLs, so `/deck` serves `deck.html`.
+
+## Versions
+
+- **Version B** (current): "The Athlete by Rory Gibbs", styled after the ChatGPT mockups, with an illustrated
+  animated hero scene and six product tiles.
+- **Version A**: the previous animated design, saved as the git tag `v3-animated`.
+  To go back: `git checkout v3-animated -- .` then commit.
+
+The hero avatar (`assets/img/avatar.webp`) is cut out of the mockup artwork. Swap in a higher resolution PNG with a
+transparent background whenever you have one; keep the same file name.
 
 ## Look and feel
 
