@@ -23,8 +23,8 @@ A fast, static rebuild of the Rory Gibbs OLY website. Plain HTML, one stylesheet
 
 - **Version B** (current): "The Athlete by Rory Gibbs", styled after the ChatGPT mockups, with an illustrated
   animated hero scene and six product tiles.
-- **Version A**: the previous animated design, saved as the git tag `v3-animated`.
-  To go back: `git checkout v3-animated -- .` then commit.
+- **Version A**: the previous animated design, commit `d2b0211`.
+  To go back: `git checkout d2b0211 -- .` then commit.
 
 The hero avatar (`assets/img/avatar.webp`) is cut out of the mockup artwork. Swap in a higher resolution PNG with a
 transparent background whenever you have one; keep the same file name.
@@ -68,5 +68,5 @@ Until one is set, the forms tell visitors to message on Instagram instead.
 
 ## Editing
 
-Each page is a normal HTML file. Change the words directly and commit. The header and footer are repeated on
-every page, so a change to the menu needs making in each file.
+Edit the page sources in `src/`, then run `python3 tools/build.py` to rebuild the pages. The shared header, footer,
+loader and icons live in `tools/build.py`. See `CLAUDE.md` for the brand guide and `ROADMAP.md` for the build order.

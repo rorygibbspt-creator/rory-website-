@@ -1,0 +1,79 @@
+title: Courses for Every Sport | Rory Gibbs OLY
+desc: Short, sport specific mindset courses from Olympic champion Rory Gibbs. One for young athletes and one for their parents. Coming soon, tell me which sport you want first.
+nav: courses
+---
+<section class="hero" data-bg="sun-soft">
+  <div class="wrap">
+    <div class="head" style="margin-bottom:0">
+      <span class="tag tag--card tag--live reveal">Coming soon</span>
+      <h1 data-split>A short course for <span class="rotator" aria-label="every sport"><span>every sport.</span><span>footballers.</span><span>rowers.</span><span>swimmers.</span><span>tennis players.</span><span>rugby players.</span><span>parents.</span></span></h1>
+      <p class="lead reveal" style="--d:250">Mindset courses built around the moments that come up in your sport. One version for the athlete, one for the parent. Short enough to finish in a week.</p>
+      <div class="btn-row reveal" style="--d:400;justify-content:center"><a class="btn" href="#waitlist">Tell me your sport {{ARROW}}</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div class="marquee__track"><span>For athletes</span><span>For parents</span><span>For every sport</span><span>Short and practical</span></div></div>
+
+<section class="section" data-bg="paper">
+  <div class="wrap" data-sports="waitlist-sport">
+    <div class="head">
+      <span class="tag reveal">Pick a sport</span>
+      <h2 data-split>Two courses, <span class="coral">one family.</span></h2>
+      <p class="lead reveal">The athlete learns the skills. The parent learns how to back them. Same language at home and at training.</p>
+    </div>
+    <div class="sports" data-stagger>
+      <button class="sport pop" type="button" data-sport="Football" aria-pressed="true" style="--c:var(--sage-deep)"><i></i>Football</button>
+      <button class="sport pop" type="button" data-sport="Rugby" aria-pressed="false" style="--c:var(--coral)"><i></i>Rugby</button>
+      <button class="sport pop" type="button" data-sport="Rowing" aria-pressed="false" style="--c:var(--sky-deep)"><i></i>Rowing</button>
+      <button class="sport pop" type="button" data-sport="Swimming" aria-pressed="false" style="--c:var(--sky-deep)"><i></i>Swimming</button>
+      <button class="sport pop" type="button" data-sport="Tennis" aria-pressed="false" style="--c:var(--sun)"><i></i>Tennis</button>
+      <button class="sport pop" type="button" data-sport="Netball" aria-pressed="false" style="--c:var(--coral)"><i></i>Netball</button>
+      <button class="sport pop" type="button" data-sport="Cricket" aria-pressed="false" style="--c:var(--sage-deep)"><i></i>Cricket</button>
+      <button class="sport pop" type="button" data-sport="Hockey" aria-pressed="false" style="--c:var(--sun)"><i></i>Hockey</button>
+      <button class="sport pop" type="button" data-sport="Athletics" aria-pressed="false" style="--c:var(--coral)"><i></i>Athletics</button>
+      <button class="sport pop" type="button" data-sport="Gymnastics" aria-pressed="false" style="--c:var(--sky-deep)"><i></i>Gymnastics</button>
+    </div>
+    <div class="course-out" aria-live="polite">
+      <div class="course course--athlete"><span class="tag tag--card">For athletes</span><b><span class="sport-name">Football</span>: the athlete mindset</b><p class="muted">Pressure, selection, mistakes and confidence, in the situations you actually face.</p></div>
+      <div class="course course--parent"><span class="tag tag--card">For parents</span><b>Supporting a young <span class="sport-name">Football</span> player</b><p class="muted">What to say, what to avoid, and how to help on match days and after a tough loss.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-bg="sky">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag tag--card reveal">The plan</span>
+      <h2 data-split>What each course <span class="coral">will cover.</span></h2>
+      <p class="lead reveal">The courses are still being built. This is what I'm planning, and your feedback will shape it.</p>
+    </div>
+    <div class="tiles tiles--4" data-stagger>
+      <div class="tile pop is-hoverable"><span class="icon icon--blush">{{MIND}}</span><h3>Pressure &amp; nerves</h3><p>Big games, trials and the moments that matter most.</p></div>
+      <div class="tile pop is-hoverable"><span class="icon icon--sage">{{SHIELD}}</span><h3>Selection &amp; setbacks</h3><p>Not getting picked, injuries and bouncing back.</p></div>
+      <div class="tile pop is-hoverable"><span class="icon icon--sun">{{MOON}}</span><h3>Habits &amp; recovery</h3><p>Sleep, routine and making training count.</p></div>
+      <div class="tile pop is-hoverable"><span class="icon icon--sky">{{PARENT}}</span><h3>Team &amp; family</h3><p>Teammates, coaches and the drive home.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="waitlist" data-bg="paper">
+  <div class="wrap">
+    <div class="panel panel--sage split" style="align-items:start">
+      <div class="stack">
+        <span class="tag tag--coral tag--live">Waitlist</span>
+        <h2 data-split>Which course should <span class="coral">I make first?</span></h2>
+        <p class="muted reveal">The sports with the most interest get built first. Add yours and you'll hear the moment it's ready.</p>
+      </div>
+      <form class="form reveal" id="courses" data-form="Course waitlist" data-success="Thanks. Your vote is in and you're on the list." novalidate>
+        <div class="pair">
+          <div class="field"><label for="courses-email">Email</label><input id="courses-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="waitlist-sport">Sport</label><select id="waitlist-sport" name="sport"><option>Football</option><option>Rugby</option><option>Rowing</option><option>Swimming</option><option>Tennis</option><option>Netball</option><option>Cricket</option><option>Hockey</option><option>Athletics</option><option>Gymnastics</option><option>Something else</option></select></div>
+        </div>
+        <div class="field"><label for="courses-who">The course for</label><select id="courses-who" name="for"><option>The athlete</option><option>The parent</option><option>Both</option></select></div>
+        <div class="btn-row"><button class="btn" type="submit">Add my vote {{ARROW}}</button></div>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>

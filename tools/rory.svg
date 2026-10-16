@@ -1,0 +1,74 @@
+<svg class="rory" viewBox="-10 -70 500 670" role="img" aria-label="Illustration of Rory in his GB jacket holding an oar">
+  <ellipse class="rory__shadow" cx="205" cy="578" rx="120" ry="14" fill="#17324a" opacity="0.12"/>
+  <g class="rory__body">
+    <!-- legs -->
+    <path d="M160 392 L156 548 Q156 560 170 560 L192 560 L198 400 Z" fill="#17324a"/>
+    <path d="M212 400 L218 560 L240 560 Q254 560 254 548 L250 392 Z" fill="#1f4160"/>
+    <!-- shoes -->
+    <path d="M146 556 Q146 572 168 574 L200 574 Q206 574 204 564 L198 554 Z" fill="#0f2436"/>
+    <path d="M214 554 L208 564 Q206 574 212 574 L246 574 Q266 572 264 556 Z" fill="#0f2436"/>
+    <path d="M152 566 h46 M212 566 h46" stroke="#fffdf8" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+    <!-- jacket -->
+    <g class="rory__torso">
+      <path d="M132 196 Q150 172 205 170 Q260 172 280 196 L290 300 Q292 360 268 404 L144 404 Q120 360 122 300 Z" fill="#ea5a4a"/>
+      <path d="M248 182 Q276 190 282 214 L290 300 Q292 360 268 404 L246 404 Q262 330 248 182 Z" fill="#d4483a" opacity="0.55"/>
+      <!-- collar -->
+      <path d="M180 172 L205 214 L230 172 Q218 166 205 166 Q192 166 180 172 Z" fill="#fffdf8"/>
+      <path d="M172 176 L196 222 L186 178 Z M238 176 L214 222 L224 178 Z" fill="#d4483a"/>
+      <!-- zip and logo -->
+      <path d="M205 214 L205 402" stroke="#17324a" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+      <path d="M232 250 l6 -10 l6 10 z M240 252 l6 -12 l6 12 z" fill="#17324a" opacity="0.8"/>
+      <!-- cuff stripes come from the arms -->
+    </g>
+    <!-- neck and head -->
+    <rect x="190" y="140" width="30" height="34" rx="12" fill="#e9a37e"/>
+    <g class="rory__head">
+      <ellipse cx="164" cy="108" rx="9" ry="13" fill="#e9a37e"/>
+      <ellipse cx="246" cy="108" rx="9" ry="13" fill="#e9a37e"/>
+      <path d="M163 96 Q163 52 205 50 Q247 52 247 96 L247 116 Q247 158 205 160 Q163 158 163 116 Z" fill="#f2b896"/>
+      <!-- hair -->
+      <path d="M160 98 Q156 50 200 40 Q236 34 252 66 Q256 80 250 100 Q246 78 230 70 Q214 76 186 70 Q170 74 166 98 Z" fill="#9b6a43"/>
+      <path d="M186 70 Q204 56 236 64 Q222 54 200 56 Z" fill="#b8865a"/>
+      <!-- face -->
+      <g class="rory__eyes">
+        <ellipse cx="188" cy="106" rx="4.2" ry="5" fill="#17324a"/>
+        <ellipse cx="222" cy="106" rx="4.2" ry="5" fill="#17324a"/>
+      </g>
+      <path d="M180 94 q8 -5 16 0 M214 94 q8 -5 16 0" stroke="#7a5233" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <path d="M205 112 q-3 12 0 16" stroke="#d98d68" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M188 136 Q205 150 222 136" stroke="#17324a" stroke-width="4" fill="#fffdf8" stroke-linecap="round" stroke-linejoin="round"/>
+      <ellipse cx="178" cy="126" rx="7" ry="4" fill="#ea5a4a" opacity="0.18"/>
+      <ellipse cx="232" cy="126" rx="7" ry="4" fill="#ea5a4a" opacity="0.18"/>
+    </g>
+    <!-- back arm (his right), reaching down to the lower hand -->
+    <path d="M140 204 Q118 280 134 336 Q146 372 168 384" stroke="#ea5a4a" stroke-width="40" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- the oar, swaying from the lower hand -->
+  <g class="rory__oar">
+    <path d="M70 548 L318 118" stroke="#17324a" stroke-width="13" stroke-linecap="round"/>
+    <g transform="translate(318 118) rotate(-60)">
+      <path d="M-6 -10 L18 -10 L18 10 L-6 10 Z" fill="#6da3c4"/>
+      <path d="M16 -40 Q16 -46 22 -46 L150 -44 Q160 -44 160 -34 L160 34 Q160 44 150 44 L22 46 Q16 46 16 40 Z" fill="#fffdf8" stroke="#17324a" stroke-opacity="0.08" stroke-width="2"/>
+      <path d="M150 -44 Q160 -44 160 -34 L160 34 Q160 44 150 44 L146 44 L146 -44 Z" fill="#ea5a4a"/>
+      <g transform="translate(92 0) rotate(60)">
+        <rect x="-19" y="-13" width="38" height="26" rx="3" fill="#17324a"/>
+        <path d="M-19 -13 L19 13 M19 -13 L-19 13" stroke="#fffdf8" stroke-width="6"/>
+        <path d="M-19 -13 L19 13 M19 -13 L-19 13" stroke="#ea5a4a" stroke-width="2.4"/>
+        <path d="M0 -13 V13 M-19 0 H19" stroke="#fffdf8" stroke-width="9"/>
+        <path d="M0 -13 V13 M-19 0 H19" stroke="#ea5a4a" stroke-width="5"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- hands and front arm sit on top of the oar -->
+  <g class="rory__front">
+    <circle cx="170" cy="380" r="17" fill="#f2b896"/>
+    <path d="M152 366 q10 -10 26 -4" stroke="#17324a" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+    <!-- front arm (his left), bent across the chest to the upper hand -->
+    <path d="M270 206 Q304 262 290 282 Q274 296 252 248" stroke="#ea5a4a" stroke-width="40" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M262 262 l-12 6" stroke="#6da3c4" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="248" cy="240" r="17" fill="#f2b896"/>
+    <path d="M236 230 q10 -6 22 0" stroke="#e9a37e" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,71 @@
+title: The Athlete App | The Athlete by Rory Gibbs
+desc: The Athlete App from Olympic champion Rory Gibbs. Practical tools, short lessons and real stories for young athletes and their parents. Coming soon, join the waitlist.
+nav: app
+---
+<section class="hero-b" data-bg="sky">
+  <div class="wrap split">
+    <div class="stack" style="gap:22px">
+      <span class="tag tag--coral tag--live reveal">Coming soon</span>
+      <h1 data-split>Your coach <span class="coral">in your pocket.</span></h1>
+      <p class="lead reveal" style="--d:250">The Athlete App will bring the deck, the lessons and my stories together in one place. Practical tools for everyday challenges, for young athletes and the parents behind them.</p>
+      <div class="btn-row reveal" style="--d:400">
+        <a class="btn" href="#waitlist">Join the app waitlist {{ARROW}}</a>
+        <a class="btn btn--soft" href="#inside">What's planned</a>
+      </div>
+    </div>
+    <div class="appphone pop" data-scrub style="width:min(70%,280px)">
+      <div class="appphone__screen" style="padding-top:34px">
+        <span class="brand--athlete"><span class="brand__mark">The <b>Athlete</b></span><span class="brand__by">by Rory Gibbs</span></span>
+        <ul class="appmenu draw">
+          <li class="is-active">{{MIND}}Mindset</li>
+          <li>{{TARGET}}Performance</li>
+          <li>{{CHART}}Habits</li>
+          <li>{{BOOK}}Stories</li>
+          <li>{{SHIELD}}Tools</li>
+          <li>{{PARENT}}Parents</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="inside" data-bg="paper">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow-b reveal">What's planned</span>
+      <h2 data-split>Built for <span class="coral">everyday challenges.</span></h2>
+      <p class="lead reveal">The app is still being built. This is the plan, and the waitlist will help shape it.</p>
+    </div>
+    <div class="ptiles" data-stagger style="grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))">
+      <div class="ptile pop"><span class="ptile__icon">{{MIND}}</span><h3>Mindset</h3><p>Nerves, confidence and how you talk to yourself.</p></div>
+      <div class="ptile pop"><span class="ptile__icon">{{TARGET}}</span><h3>Performance</h3><p>Preparation, routines and big day plans.</p></div>
+      <div class="ptile pop"><span class="ptile__icon">{{MOON}}</span><h3>Habits</h3><p>Sleep, recovery and making training count.</p></div>
+      <div class="ptile pop"><span class="ptile__icon">{{BOOK}}</span><h3>Stories</h3><p>Real moments from Tokyo to Paris.</p></div>
+      <div class="ptile pop"><span class="ptile__icon">{{PARENT}}</span><h3>For parents</h3><p>How to help without adding pressure.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="waitlist" data-bg="blush">
+  <div class="wrap">
+    <div class="panel split" style="align-items:start">
+      <div class="stack">
+        <span class="tag tag--coral tag--live">Waitlist</span>
+        <h2 data-split>Be first to <span class="coral">get the app.</span></h2>
+        <p class="muted reveal">Add your details and you'll hear the moment it's ready.</p>
+      </div>
+      <form class="form reveal" id="app" data-form="App waitlist" data-success="You're on the list. I'll let you know as soon as the app is ready." novalidate>
+        <div class="pair">
+          <div class="field"><label for="app-name">First name</label><input id="app-name" name="name" autocomplete="given-name"></div>
+          <div class="field"><label for="app-email">Email</label><input id="app-email" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="pair">
+          <div class="field"><label for="app-role">I'm a</label><select id="app-role" name="role"><option>Young athlete</option><option>Parent</option><option>Coach</option><option>School or club</option></select></div>
+          <div class="field"><label for="app-sport">Main sport</label><input id="app-sport" name="sport" placeholder="e.g. Football"></div>
+        </div>
+        <div class="btn-row"><button class="btn" type="submit">Join the waitlist {{ARROW}}</button></div>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
