@@ -7,19 +7,18 @@ nav: deck
     <div class="stack" style="gap:24px">
       <span class="tag tag--coral tag--live reveal">Coming soon</span>
       <h1 data-split>The Athlete <span class="coral">Deck.</span></h1>
-      <p class="lead reveal" style="--d:250">Practical cards for young athletes, parents and coaches, in any sport. One idea per card. Pick one, talk about it, try it at training. Think better, train better, respond better.</p>
+      <p class="lead reveal" style="--d:250">93 practical cards for young athletes, parents and coaches, in any sport. One idea per card. Pick one, talk about it, try it at training. Think better, train better, respond better.</p>
       <div class="btn-row reveal" style="--d:400">
         <a class="btn" href="#waitlist">Join the waitlist {{ARROW}}</a>
         <a class="btn btn--soft" href="#inside">What's inside</a>
       </div>
     </div>
     <div class="stage" data-tilt>
-      <div class="stage__blob"></div>
       <span class="orbit orbit--1">{{CARDS}}</span>
       <span class="orbit orbit--2">{{MIND}}</span>
       <span class="orbit orbit--3">{{PARENT}}</span>
       <span class="orbit orbit--4">{{TROPHY}}</span>
-      <div class="stage__box" data-tilt-target><img src="/assets/img/deck-box.webp" alt="The Athlete Deck card box" width="900" height="1125" fetchpriority="high"></div>
+      <div class="stage__box" data-tilt-target><img class="boxshot" src="/images/box/athlete-deck-box.webp" alt="The Athlete Deck box, by Olympic champion Rory Gibbs" width="1122" height="1402" fetchpriority="high"></div>
     </div>
   </div>
 </section>
@@ -27,17 +26,11 @@ nav: deck
 <section class="section" id="inside" data-bg="blush">
   <div class="wrap">
     <div class="head">
-      <span class="tag tag--card reveal">Five sections</span>
-      <h2 data-split><span class="burst">Deal <span class="coral">them out</span></span></h2>
-      <p class="lead reveal">Deal them out, then tap any card to flip it.</p>
+      <span class="tag tag--card reveal">A first look</span>
+      <h2 data-split><span class="burst">Inside <span class="coral">the deck</span></span></h2>
+      <p class="lead reveal">Every card has a front and a back. Tap a card to turn it over, then flick through the first few.</p>
     </div>
-    <div class="fan">
-      <button class="pcard" type="button" aria-pressed="false" style="--x:-150;--y:12;--r:-16deg;--tone:var(--sage)"><span class="pcard__inner"><span class="pcard__face"><small>01</small><span class="icon">{{RUNNER}}</span><b>Start Here</b><em>Tap to flip</em></span><span class="pcard__face pcard__back"><b>Start Here</b><p>The foundations. How to use the deck and the ideas everything else is built on.</p></span></span></button>
-      <button class="pcard" type="button" aria-pressed="false" style="--x:-76;--y:3;--r:-8deg;--tone:var(--sky)"><span class="pcard__inner"><span class="pcard__face"><small>02</small><span class="icon">{{MIND}}</span><b>Mindset</b><em>Tap to flip</em></span><span class="pcard__face pcard__back"><b>Mindset</b><p>Nerves, confidence, comparison and how you talk to yourself.</p></span></span></button>
-      <button class="pcard" type="button" aria-pressed="false" style="--x:0;--y:0;--r:0deg;--tone:var(--blush)"><span class="pcard__inner"><span class="pcard__face"><small>03</small><span class="icon icon--coral">{{CHART}}</span><b>Performance</b><em>Tap to flip</em></span><span class="pcard__face pcard__back"><b>Performance</b><p>Sleep, recovery, habits and preparation. The things that make training count.</p></span></span></button>
-      <button class="pcard" type="button" aria-pressed="false" style="--x:76;--y:3;--r:8deg;--tone:var(--sun-soft)"><span class="pcard__inner"><span class="pcard__face"><small>04</small><span class="icon">{{STORIES}}</span><b>Stories</b><em>Tap to flip</em></span><span class="pcard__face pcard__back"><b>Stories</b><p>Real moments from my career, Tokyo to Paris, and what each one taught me.</p></span></span></button>
-      <button class="pcard" type="button" aria-pressed="false" style="--x:150;--y:12;--r:16deg;--tone:var(--sky)"><span class="pcard__inner"><span class="pcard__face"><small>05</small><span class="icon">{{PARENT}}</span><b>Parent Support</b><em>Tap to flip</em></span><span class="pcard__face pcard__back"><b>Parent Support</b><p>What to say, what to avoid and when to say nothing at all.</p></span></span></button>
-    </div>
+    {{DECKFLIP}}
   </div>
 </section>
 
@@ -54,7 +47,7 @@ nav: deck
       </ul>
     </div>
     <div class="pop" style="display:grid;place-items:center" data-scrub>
-      <img src="/assets/img/deck-card-welcome.webp" alt="Card 01, Welcome to the Athlete Deck" loading="lazy" width="849" height="1200" style="width:min(100%,380px);mix-blend-mode:multiply;transform:rotate(calc(-6deg + var(--p,.5) * 12deg))">
+      <img src="/images/cards/card-01-front.webp" alt="Card 01, Welcome to The Athlete Deck" loading="lazy" width="640" height="1049" style="width:min(100%,340px);border-radius:14px;box-shadow:var(--shadow);transform:rotate(calc(-5deg + var(--p,.5) * 10deg))">
     </div>
   </div>
 </section>

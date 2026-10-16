@@ -26,8 +26,8 @@ A fast, static rebuild of the Rory Gibbs OLY website. Plain HTML, one stylesheet
 - **Version A**: the previous animated design, commit `d2b0211`.
   To go back: `git checkout d2b0211 -- .` then commit.
 
-The hero avatar (`assets/img/avatar.webp`) is cut out of the mockup artwork. Swap in a higher resolution PNG with a
-transparent background whenever you have one; keep the same file name.
+Real Athlete Deck artwork lives in `images/cards`, `images/box` and `images/rory`. The flip-through card viewer is
+placed on a page with `{{DECKFLIP}}`; its card list is `DECK_CARDS` in `tools/build.py`.
 
 ## Look and feel
 

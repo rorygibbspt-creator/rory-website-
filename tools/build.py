@@ -61,6 +61,53 @@ ICONS = {
 RORY = open(pathlib.Path(__file__).parent / "rory.svg").read().strip()
 ICONS["rory"] = RORY
 
+# The Athlete Deck cards shown on the site. Images: images/cards/card-NN-front.webp and card-NN-back.webp.
+# To add a card, drop in both images and add a line here.
+DECK_CARDS = [
+    ("01", "Welcome to The Athlete Deck"),
+    ("02", "How to use this deck"),
+    ("03", "The Foundations"),
+    ("04", "What being an athlete means"),
+    ("05", "Talent vs hard work"),
+    ("06", "Your controllables"),
+    ("07", "Goals vs systems"),
+    ("08", "What success means to you"),
+    ("09", "Hard moments"),
+]
+
+def card_src(n, side):
+    return f"/images/cards/card-{n}-{side}.webp"
+
+def deckflip():
+    n, title = DECK_CARDS[0]
+    thumbs = "\n".join(
+        f'      <button type="button" role="listitem" class="deckflip-thumb" aria-current="{"true" if k == 0 else "false"}" '
+        f'aria-label="Show card {cn}, {ct}" data-n="{cn}" data-title="{ct}"><img src="{card_src(cn, "front")}" alt="" loading="lazy" width="640" height="1049"></button>'
+        for k, (cn, ct) in enumerate(DECK_CARDS)
+    )
+    return f"""<div class="deckflip" data-deckflip aria-label="Preview cards from The Athlete Deck">
+    <div class="deckflip-stage">
+      <button type="button" class="deckflip-card" aria-pressed="false" aria-label="Card {n}, {title}. Showing the front. Press to turn over.">
+        <span class="deckflip-face"><img class="deckflip-front" src="{card_src(n, "front")}" alt="" width="640" height="1049" draggable="false"></span>
+        <span class="deckflip-face deckflip-back"><img class="deckflip-backimg" src="{card_src(n, "back")}" alt="" width="640" height="1049" draggable="false"></span>
+      </button>
+    </div>
+    <div class="deckflip-meta">
+      <p class="deckflip-title">{title}</p>
+      <p class="deckflip-hint">Tap the card to turn it over.</p>
+    </div>
+    <div class="deckflip-nav">
+      <button type="button" class="deckflip-btn" data-dir="-1">Previous card</button>
+      <span class="deckflip-count" aria-live="polite">1 of {len(DECK_CARDS)}</span>
+      <button type="button" class="deckflip-btn" data-dir="1">Next card</button>
+    </div>
+    <div class="deckflip-thumbs" role="list">
+{thumbs}
+    </div>
+  </div>"""
+
+ICONS["deckflip"] = deckflip()
+
 HEAD = """<!doctype html>
 <html lang="en-GB">
 <head>
@@ -72,7 +119,7 @@ HEAD = """<!doctype html>
 <meta property="og:type" content="website">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
-<meta property="og:image" content="/assets/img/deck-box.webp">
+<meta property="og:image" content="/images/box/athlete-deck-box.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <script>try{{var d=document.documentElement;d.classList.add('js');if(!sessionStorage.getItem('rg-loaded')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('show-loader')}}catch(e){{}}</script>
@@ -88,11 +135,11 @@ HEAD = """<!doctype html>
 LOADER = f"""<div class="loader" aria-hidden="true">
   <div class="loader__inner">
     <div class="loader__deck">
-      <div class="loader__card"><img src="/assets/img/sleep-rating.webp" alt=""></div>
-      <div class="loader__card"><img src="/assets/img/teammate-athlete-b.webp" alt=""></div>
-      <div class="loader__card"><img src="/assets/img/sleep-cover.webp" alt=""></div>
-      <div class="loader__card"><img src="/assets/img/teammate-cover.webp" alt=""></div>
-      <div class="loader__card"><img src="/assets/img/deck-card-welcome.webp" alt=""></div>
+      <div class="loader__card"><img src="/images/cards/card-09-front.webp" alt=""></div>
+      <div class="loader__card"><img src="/images/cards/card-07-front.webp" alt=""></div>
+      <div class="loader__card"><img src="/images/cards/card-05-front.webp" alt=""></div>
+      <div class="loader__card"><img src="/images/cards/card-03-front.webp" alt=""></div>
+      <div class="loader__card"><img src="/images/cards/card-01-front.webp" alt=""></div>
     </div>
     <div class="loader__brand brand--athlete"><span class="brand__mark">The <b>Athlete</b></span><span class="brand__by">by Rory Gibbs OLY</span></div>
     <div class="loader__words"><span>Think better.</span><span>Train better.</span><span>Respond better.</span></div>

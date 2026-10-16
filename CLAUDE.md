@@ -22,7 +22,8 @@ The plan and build order live in `ROADMAP.md`.
 - Plain, warm, direct. Short sentences. Talk to a 14 year old and their parent at the same time.
 - Honest. Never invent stats, testimonials, prices or product claims. Say "coming soon" for unbuilt things.
 - Real testimonials only: Sarah Hughes, Rachel Kemp, Mark Patel, Tom C. (mentoring), Joanna Park (schools).
-- Unconfirmed, do not publish without Rory's OK: number of cards in the deck, course prices, app features.
+- Confirmed: the Athlete Deck has **93 cards**.
+- Unconfirmed, do not publish without Rory's OK: course prices, app features.
 
 ## Look
 
@@ -37,7 +38,10 @@ The plan and build order live in `ROADMAP.md`.
 - Static site. Edit pages in `src/*.html`, then run `python3 tools/build.py` to regenerate the root `*.html`.
   Never edit the root `*.html` directly. Shared header, footer, loader and icons are in `tools/build.py`.
 - Styles in `assets/css/site.css`, motion and forms in `assets/js/site.js`, images in `assets/img/`.
-- The hero avatar is `assets/img/avatar.webp`. Replace the file to swap the character.
+- Real deck artwork lives in `images/cards` (card-NN-front/back.webp), `images/box` and `images/rory`.
+  The card viewer (`{{DECKFLIP}}` in any page) reads its card list from `DECK_CARDS` in `tools/build.py`.
+  To add a card: drop in both images and add a line to `DECK_CARDS`.
+- The hero uses `images/rory/rory-gibbs-illustration.webp`.
 - Version A (previous design) is commit `d2b0211`. Version B (current) is the mockup style.
 - Nothing here is live. rorygibbs.com still runs from the old `rory-2` repo on Vercel.
 - Forms need `SITE_CONFIG.formEndpoint` or `email` set in `assets/js/site.js` before they send.

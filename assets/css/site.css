@@ -993,3 +993,62 @@ h3 { font-weight: 800; letter-spacing: -0.025em; }
 .trio .pcard:hover, .trio .pcard.is-flipped { z-index: 6; }
 .trio .pcard__face .cap { font-size: 0.74rem; }
 @media (max-width: 640px) { .trio .pcard { --w: 100px; } .trio .pcard__face b { font-size: 0.86rem; } .trio .pcard__face .cap { font-size: 0.66rem; } }
+
+/* ==========================================================================
+   The Athlete Deck: real cards (from athlete-deck-web)
+   ========================================================================== */
+
+/* Loader deals the real cards at their true proportions */
+.loader__deck { width: 112px; height: 184px; }
+.loader__card { border-radius: 9px; }
+.loader__card img, .loader__card:nth-child(5) img { object-fit: cover; }
+
+/* Flip-through card viewer */
+.deckflip { --df-navy: #04304c; --df-coral: #ed5b46; --df-cream: #fbfaf5; --df-blue: #d9eff4;
+  color: var(--df-navy); display: grid; justify-items: center; gap: 18px; padding: 8px 0; width: 100%; min-width: 0; }
+.deckflip-stage { perspective: 1600px; width: min(320px, 74vw); aspect-ratio: 640 / 1049; max-width: 100%; }
+.deckflip-card { position: relative; width: 100%; height: 100%; border: 0; padding: 0; background: none; cursor: pointer;
+  transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(.2,.7,.2,1); border-radius: 4.2% / 2.6%; }
+.deckflip-card.is-flipped { transform: rotateY(180deg); }
+.deckflip-card.is-swapping { transition: none; }
+.deckflip-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border-radius: 4.2% / 2.6%; overflow: hidden; background: var(--df-cream);
+  box-shadow: 0 18px 40px -18px rgba(4, 48, 76, 0.45), 0 2px 6px rgba(4, 48, 76, 0.12); }
+.deckflip-face img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.deckflip-back { transform: rotateY(180deg); }
+.deckflip-card:focus-visible { outline: 3px solid var(--df-coral); outline-offset: 6px; }
+.deckflip-meta { text-align: center; max-width: 34ch; }
+.deckflip-title { font-weight: 800; font-size: 1.15rem; margin: 0; }
+.deckflip-hint { margin: 4px 0 0; font-size: 0.95rem; opacity: 0.75; }
+.deckflip-nav { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.deckflip-btn { border: 2px solid var(--df-navy); background: var(--df-cream); color: var(--df-navy); border-radius: 999px;
+  padding: 10px 18px; font: inherit; font-weight: 800; cursor: pointer; transition: background 0.2s; }
+.deckflip-btn:hover { background: var(--df-blue); }
+.deckflip-btn:focus-visible { outline: 3px solid var(--df-coral); outline-offset: 3px; }
+.deckflip-count { font-weight: 800; min-width: 5ch; text-align: center; }
+.deckflip-thumbs { display: flex; gap: 8px; overflow-x: auto; max-width: 100%; padding: 6px 4px 10px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+.deckflip-thumb { flex: 0 0 auto; width: 54px; border: 0; padding: 0; background: none; cursor: pointer; scroll-snap-align: center;
+  border-radius: 6px; overflow: hidden; opacity: 0.55; transition: opacity 0.2s, transform 0.2s; }
+.deckflip-thumb img { width: 100%; height: auto; display: block; }
+.deckflip-thumb[aria-current="true"] { opacity: 1; transform: translateY(-4px); outline: 2px solid var(--df-coral); outline-offset: 2px; }
+.deckflip-thumb:focus-visible { outline: 3px solid var(--df-coral); outline-offset: 2px; opacity: 1; }
+@media (max-width: 420px) { .deckflip-btn { padding: 9px 14px; font-size: 0.9rem; } }
+.fpanel .deckflip-thumbs { max-width: min(100%, 520px); }
+
+/* Real box shot */
+.boxshot { width: 100%; height: auto; mix-blend-mode: multiply; }
+
+/* Hero: Rory's own illustration, gently floating */
+.scene--art { background: transparent; overflow: visible; aspect-ratio: auto; }
+.scene__art { display: block; width: 100%; height: auto; border-radius: var(--r-lg);
+  box-shadow: 0 30px 60px -34px rgba(23, 50, 74, 0.45); animation: art-float 6s ease-in-out infinite; }
+@keyframes art-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.scene--art .scene__note { left: 52%; top: 5%; }
+.scene--art .scene__list { top: 5%; right: 3%; }
+@media (max-width: 1100px) { .scene--art .scene__list { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .scene__art { animation: none; }
+  .deckflip-card, .deckflip-thumb { transition: none; }
+}
+.scene--art .scene__note { left: 4%; top: 4%; transform: rotate(-6deg); font-size: clamp(0.95rem, 0.6rem + 0.9vw, 1.35rem); }
+.deckflip-btn { font-size: 0.95rem; padding: 9px 16px; }

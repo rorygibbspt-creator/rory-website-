@@ -274,6 +274,56 @@ const SITE_CONFIG = {
     }, 1400);
   });
 
+  /* ---------- The Athlete Deck viewer: one real card at a time ---------- */
+  document.querySelectorAll("[data-deckflip]").forEach((viewer) => {
+    const card = viewer.querySelector(".deckflip-card");
+    const front = viewer.querySelector(".deckflip-front");
+    const back = viewer.querySelector(".deckflip-backimg");
+    const title = viewer.querySelector(".deckflip-title");
+    const count = viewer.querySelector(".deckflip-count");
+    const strip = viewer.querySelector(".deckflip-thumbs");
+    const thumbs = Array.from(viewer.querySelectorAll(".deckflip-thumb"));
+    const cards = thumbs.map((t) => ({ n: t.dataset.n, title: t.dataset.title }));
+    const src = (n, side) => `/images/cards/card-${n}-${side}.webp`;
+    let i = 0;
+
+    const label = () => {
+      const c = cards[i];
+      const side = card.classList.contains("is-flipped") ? "back" : "front";
+      card.setAttribute("aria-label", `Card ${c.n}, ${c.title}. Showing the ${side}. Press to turn over.`);
+    };
+    const show = (k) => {
+      i = (k + cards.length) % cards.length;
+      const c = cards[i];
+      card.classList.add("is-swapping");
+      card.classList.remove("is-flipped");
+      card.setAttribute("aria-pressed", "false");
+      front.src = src(c.n, "front");
+      back.src = src(c.n, "back");
+      void card.offsetWidth;
+      card.classList.remove("is-swapping");
+      title.textContent = c.title;
+      count.textContent = `${i + 1} of ${cards.length}`;
+      thumbs.forEach((t, k2) => t.setAttribute("aria-current", String(k2 === i)));
+      const t = thumbs[i];
+      strip.scrollTo({ left: t.offsetLeft - strip.clientWidth / 2 + t.clientWidth / 2, behavior: reduceMotion ? "auto" : "smooth" });
+      label();
+      [i + 1, i - 1].forEach((j) => { const nb = cards[(j + cards.length) % cards.length]; new Image().src = src(nb.n, "back"); });
+    };
+    card.addEventListener("click", () => {
+      const on = card.classList.toggle("is-flipped");
+      card.setAttribute("aria-pressed", String(on));
+      label();
+    });
+    viewer.querySelectorAll(".deckflip-btn").forEach((b) => b.addEventListener("click", () => show(i + Number(b.dataset.dir))));
+    thumbs.forEach((t, k) => t.addEventListener("click", () => show(k)));
+    viewer.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { e.preventDefault(); show(i + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); show(i - 1); }
+    });
+    new Image().src = src(cards[0].n, "back");
+  });
+
   /* ---------- Deck cards flip ---------- */
   document.querySelectorAll(".pcard").forEach((card) => {
     card.addEventListener("click", () => {
