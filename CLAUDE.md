@@ -1,7 +1,7 @@
 # The Athlete by Rory Gibbs: project guide
 
 Read this first in every new chat. It keeps the website, deck, presentations, courses and app consistent.
-The plan and build order live in `ROADMAP.md`.
+The plan and build order live in `ROADMAP.md`. Handover notes, links and briefs live in `docs/`.
 
 ## Who and what
 

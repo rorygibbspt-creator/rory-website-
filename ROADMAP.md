@@ -7,7 +7,9 @@ Start each chat with: "Read CLAUDE.md and ROADMAP.md, then let's work on step N.
 
 1. **School presentations (online first).** Fastest route to income, and the core content for everything else.
    - Athlete talk: 30 minutes for young athletes, then live Q&A.
-   - Parent evening: 30 minutes on supporting your athlete at home and through the holidays.
+   - Parent evening: 20 minutes, shown on the school's screen (live or pre-recorded), on supporting your child at home
+     in sport, music, exams and anything they work hard at. Ends with a downloadable checklist.
+     Full brief: `docs/briefs/parents-evening-talk.md`. Build this first.
    - Deliverables: slide decks, speaker notes, a one page booking sheet for schools, follow up email.
    - Website: the Schools page already lists both online talks. Add booking and pricing once decided.
 2. **Online Athlete Deck.** Release cards digitally before printing.
