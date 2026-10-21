@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 WPM = 150
 SWAPS = {"name": "SCHOOL NAME", "short": "SCHOOL SHORT NAME", "thanks": "WHO TO THANK",
          "d1": "SCHOOL DETAIL 1", "d2": "SCHOOL DETAIL 2", "values": "SCHOOL VALUES", "outro": "OUTRO LINE"}
+CAMS = {"full": "full frame", "bubble": "circle", "off": "off"}
 SEGS = {"intro": "School intro (recorded fresh for each school)", "main": "Main talk (recorded once)",
         "outro": "School outro (recorded fresh for each school)"}
 
@@ -26,10 +27,13 @@ def text(fragment):
 
 def main(talk):
     src = (ROOT / "docs/talks" / talk / "index.html").read_text()
-    slides = re.findall(r'<section class="slide[^"]*" data-seg="(\w+)" data-cam="(\w+)" data-title="([^"]+)">(.*?)</section>', src, re.S)
+    slides = []
+    for attrs, body in re.findall(r'<section class="scene"([^>]*)>(.*?)</section>', src, re.S):
+        a = dict(re.findall(r'data-(\w+)="([^"]*)"', attrs))
+        slides.append((a["seg"], a["cam"], a["title"], body))
     title = re.search(r"<title>(.*?)</title>", src).group(1)
     out, seg_now, clock = [f"# {title}: the script", "",
-                           f"Generated from `docs/talks/{talk}/index.html` by `tools/talk_script.py`. Edit the deck, then rerun.",
+                           f"Generated from `docs/talks/{talk}/index.html` by `tools/talk_script.py`. Edit the talk there, then rerun.",
                            "Anything in **[BRACKETS]** is swapped for each school. Lines marked *Rory to check* need Rory's OK.", ""], None, 0.0
     for n, (seg, cam, stitle, body) in enumerate(slides, 1):
         notes = re.search(r'<aside class="notes">(.*?)</aside>', body, re.S).group(1)
@@ -37,14 +41,18 @@ def main(talk):
             out += [f"## {SEGS[seg]}", ""]
             seg_now = seg
         mins = f"{int(clock // 60)}:{int(clock % 60):02d}"
-        out += [f"### {n}. {stitle.replace('[school]', '[SCHOOL]')}  ({mins}, camera: {cam})", ""]
+        out += [f"### {n}. {stitle.replace('[school]', '[SCHOOL]')}  ({mins}, camera: {CAMS[cam]})", ""]
         for d in re.findall(r'<span class="dir">(.*?)</span>', notes, re.S):
             out += [f"*{text(d)}*", ""]
-        paras = [text(p) for p in re.findall(r"<p>(.*?)</p>", notes, re.S)]
+        raw = re.findall(r"<p([^>]*)>(.*?)</p>", notes, re.S)
+        paras = [text(p) for _, p in raw]
+        holds = sum(float(h) for attrs, _ in raw for h in re.findall(r'data-hold="([\d.]+)"', attrs))
         paras = [p.replace("[Rory to check]", "*(Rory to check)*") for p in paras]
         out += sum(([p, ""] for p in paras), [])
         words = sum(len(re.sub(r"\[[^\]]*\]", "", p).split()) for p in paras)
-        clock += words / WPM * 60 + (8 if cam == "off" else 2)
+        if holds:
+            out += [f"*(Pause about {holds:g} seconds on screen.)*", ""]
+        clock += words / WPM * 60 + holds + 0.4 * len(paras) + 1.8
     out.append(f"**Estimated running time: {int(clock // 60)}:{int(clock % 60):02d} at {WPM} words a minute.**")
     dest = ROOT / "docs/talks" / f"{talk}-script.md"
     dest.write_text("\n".join(out) + "\n")

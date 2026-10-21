@@ -18,12 +18,16 @@ top right, and a strip in the school's colours along the bottom. The deck templa
 
 ## Recording the main talk (once)
 
-1. Record Rory's camera on its own, against a plain background, reading from a teleprompter
-   (a phone teleprompter app is fine). Do the talk in short takes, one slide at a time. Mistakes don't matter: retake the line.
-2. Record the slides separately, as a screen recording of the deck in full screen, or export each slide as an image.
-3. In the editor, lay the camera into the round bubble, bottom left, over the slides. The deck leaves that corner empty on purpose.
+The talk is no longer a set of slides. It's one continuous animated world that moves left to right, with things popping in,
+lighting up and ticking off in time with the script. The school tag, the pill label, the colour band and Rory's circle stay
+fixed on top and never re-animate. See `04-filming.md` for how to film it at home.
 
-Because the slides fill the screen and Rory sits in a small circle, cuts between takes are invisible.
+1. Record Rory's camera on its own, reading from a teleprompter. Do the talk in short takes, one scene at a time.
+   Mistakes don't matter: retake the line.
+2. Export the animation as a video. It can be screen recorded in full screen, or exported automatically.
+3. In the editor, lay the camera into the circle, bottom left, over the animation. Every scene leaves that corner empty on purpose.
+
+Because the animation fills the screen and Rory sits in a small circle, cuts between takes are invisible.
 That is how the talk ends up word perfect without any AI.
 
 ## Making a school's version
