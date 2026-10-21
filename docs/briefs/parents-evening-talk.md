@@ -9,6 +9,13 @@ The first thing to build in the school talks workstream. Follow `CLAUDE.md` for 
   1. **Live on a video call**, shown on the school's screen, with an optional short Q&A after.
   2. **Pre-recorded**, so a school can play it any time. This is the passive income version: record once,
      license it to many schools, and refresh it each year.
+- **Rory's preferred model:** record the talk for each school, made to feel live. Use the school's name, crest
+  and colours on the slides, and mention the school by name as often as feels natural (their sports, music, values).
+  The school plays the video at their parents' evening, then Rory can join on a video call for an optional short Q&A.
+  So build the slides as a template where the school name, crest and colours swap in quickly, and mark every spot in the
+  script where Rory says the school's name or a school detail.
+- Not interactive. A straight 20 minute talk with key slides, styled like Rory's current social content
+  (big simple statements, carousel style), no polls needed.
 - Audience: parents of children around 10 to 14 (prep school, and the year before senior school).
 - Not just sport. The same ideas apply to music, exams, drama and anything a child works hard at.
   Rory's examples come from sport, but every point should land for a parent whose child plays the violin.
