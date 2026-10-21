@@ -3,7 +3,7 @@
 Personalised video talks for schools, by Rory Gibbs OLY. Recorded once, personalised for every school.
 Every word is genuinely Rory. No AI voice, no AI face, no AI clone.
 
-Everything in square brackets is a placeholder for Rory to confirm.
+Everything in square brackets is a placeholder for Rory to confirm. Not offered for now: live Q&A and free sports day clips.
 
 ## The range name
 
@@ -18,7 +18,7 @@ Two talks. Buy one, or both together.
 | Length | About 20 minutes | About 20 minutes |
 | Watched | At home, from a link the school emails to parents | In assembly, PE, PSHE or tutor time |
 | Ages | Parents of children roughly 10 to 16 | Pupils roughly 10 to 16 |
-| Price | £[500] | £[500] |
+| Price | £499 | £499 |
 
 Other names Rory could pick instead, if those do not feel right:
 parents' talk: *The Home Team*, *In Their Corner*, *The Car Journey Home*.
@@ -42,7 +42,7 @@ pupils' talk: *From 18 to Gold*, *Talent Opens the Door*.
 
 ## Bundle
 
-**The Home and School Pack: both talks, £[850].**
+**The Home and School Pack: both talks, £849.**
 
 Both talks, each with its own personal intro and outro, school branded slides, the checklist and the discussion questions.
 The point of the bundle: pupils hear the story in school, parents hear how to back it up at home, in the same week,
@@ -61,15 +61,11 @@ so everyone is speaking the same language.
 
 ## Renewal
 
-**Renew for the next school year: £[250] per talk, or £[400] for the pack.**
+**Renew for the next school year: £249 per talk, or £399 for the pack.**
 
-Includes a fresh personal intro and outro for the new year (new events, new year group), updated slides if the school's
-details have changed, and the latest version of the main talk.
-
-## Optional extra: live Q&A
-
-**£[150] per session.** Rory joins on a video call after the school has shown the talk, for about [20 to 30] minutes,
-and answers questions from parents or pupils. Booked at a time that suits both sides, subject to Rory's training and travel.
+Includes a fresh personal intro and outro for the new year (new events, new year group) and the latest version of the main talk.
+Renewal is cheaper because only the intro and outro are new. The main talk is never re-recorded per school:
+see `03-production.md` for how the video is built in three separate parts so this stays quick.
 
 ## Timing hooks (why a school would send it now)
 
@@ -78,11 +74,7 @@ and answers questions from parents or pupils. Booked at a time that suits both s
 | September, start of the year | Both | New year, new habits. Set the tone for the year at home and in school. |
 | Before exams (spring term) | Back Them at Home, plus Built. Not Born. for Year 11 and 13 | Big moments feel the same to a child, whether it is a match, a grade or a GCSE. |
 | The move to senior school (summer term, Year 6 to 7) | Back Them at Home | Help parents and children through the biggest change so far. |
-| After sports day (June and July) | Built. Not Born. | Celebrate effort, then keep it going into next year. |
-
-**Free door opener after sports day:** a 30 second "well done" video from Rory to the school by name, for the school to share
-with its community. Free, no obligation, and it shows the school exactly how a personal intro feels.
-Limited to [a set number] of schools per summer so it stays manageable.
+| End of the summer term | Built. Not Born. | Celebrate the year's effort, then carry it into the next one. |
 
 ## How booking works
 
@@ -91,7 +83,6 @@ Limited to [a set number] of schools per summer so it stays manageable.
    (events coming up, values, houses, a recent win), and the date they plan to send or show it.
 3. Rory records the intro and outro and the slides are set in the school's colours.
 4. The school receives the link, the download, the ready to send email and the extras.
-5. Optional: book the live Q&A.
 
 ## Things that stay true
 
@@ -103,8 +94,8 @@ Limited to [a set number] of schools per summer so it stays manageable.
 ## To confirm with Rory
 
 - [ ] Names: Back Them at Home and Built. Not Born., or one of the alternatives.
-- [ ] Prices: single talk, pack, renewal, live Q&A, group pricing.
+- [x] Prices: £499 per talk, £849 for the pack, renewals £249 per talk or £399 for the pack.
+- [ ] Group pricing for trusts.
 - [ ] Turnaround time and how many personalised recordings a week are realistic.
-- [ ] How many free sports day clips per summer.
 - [ ] Payment method and terms (invoice, card, purchase order).
 - [ ] Where the videos are hosted (for example Vimeo private links) so links can be switched off at year end.

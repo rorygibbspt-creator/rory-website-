@@ -1,0 +1,902 @@
+<title>Back Them at Home</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Gochi+Hand&family=Nunito:wght@600;700;800;900&display=swap">
+<style>
+/* Layout: a fixed 1920x1080 video frame scaled to fit, with the script, running order and school swap panel beneath.
+   One deliberate light look: the slides are the video, so they always sit on paper. */
+:root {
+  --paper: #faf7f0;
+  --card: #fffdf8;
+  --ink: #17324a;
+  --ink-soft: #4b5f70;
+  --coral: #ea5a4a;
+  --sage: #e2ecda;
+  --sky: #ddedf6;
+  --blush: #fbe4df;
+  --sun: #f2b544;
+  --sun-soft: #fdf0d3;
+  --line: rgba(23, 50, 74, 0.14);
+  --school: #1f3d7a;
+  --school-2: #c9a227;
+  --display: "Plus Jakarta Sans", "Nunito", "Segoe UI", Arial, sans-serif;
+  --body: "Nunito", "Avenir Next Rounded", "Segoe UI", Arial, sans-serif;
+  --hand: "Gochi Hand", "Comic Sans MS", cursive;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--paper); color: var(--ink); }
+body { margin: 0; font-family: var(--body); font-weight: 600; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; border-radius: 8px; }
+
+.page { max-width: 1280px; margin: 0 auto; padding-block: 20px 60px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 18px; }
+
+/* ---------- top bar ---------- */
+.bar { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
+.bar h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; }
+.bar h1 span { color: var(--coral); }
+.bar p { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { border: 1.5px solid var(--line); background: var(--card); border-radius: 999px; padding: 7px 14px; font-weight: 800; cursor: pointer; font-size: 0.9rem; }
+.btn:hover { border-color: var(--ink); }
+.btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn--coral { background: var(--coral); color: #fff; border-color: var(--coral); }
+.count { font-variant-numeric: tabular-nums; font-weight: 800; min-width: 70px; text-align: center; }
+
+/* ---------- the video frame ---------- */
+.frame-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 18px; overflow: hidden; box-shadow: 0 1px 0 rgba(23,50,74,.05), 0 24px 50px -26px rgba(23,50,74,.45); background: var(--paper); }
+.stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; background: var(--paper); overflow: hidden; font-family: var(--body); }
+.stage::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35; background-image: radial-gradient(rgba(23,50,74,.05) 1px, transparent 1px); background-size: 6px 6px; }
+
+.notes { display: none; }
+.slide { position: absolute; inset: 0; display: none; padding: 200px 120px 120px; }
+.stage[data-cam="bubble"] .slide { padding-left: 420px; }
+.slide.is-active { display: block; animation: rise .5s cubic-bezier(.2,.7,.1,1); }
+@keyframes rise { from { opacity: .35; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .slide.is-active { animation: none; } }
+
+/* pill row, like the social carousels */
+.pillrow { position: absolute; left: 120px; right: 120px; top: 78px; display: flex; align-items: center; gap: 22px; z-index: 3; }
+.pill { font-family: var(--display); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; font-size: 26px; padding: 12px 28px; border-radius: 999px; background: var(--sky); white-space: nowrap; }
+.pill-line { flex: 1; height: 3px; border-radius: 3px; background: var(--sky); }
+.pill-dot { width: 74px; height: 74px; border-radius: 50%; background: var(--sky); display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 32px; }
+.school-tag { display: flex; align-items: center; gap: 16px; padding: 8px 26px 8px 8px; border-radius: 999px; background: var(--card); box-shadow: inset 0 0 0 3px var(--school); font-family: var(--display); font-weight: 800; font-size: 25px; color: var(--school); white-space: nowrap; }
+.school-tag img { width: 62px; height: 62px; object-fit: contain; }
+.t-sage .pill, .t-sage .pill-line, .t-sage .pill-dot { background: var(--sage); }
+.t-blush .pill, .t-blush .pill-line, .t-blush .pill-dot { background: var(--blush); }
+.t-sun .pill, .t-sun .pill-line, .t-sun .pill-dot { background: var(--sun-soft); }
+
+/* the school colour band along the bottom of every frame */
+.band { position: absolute; left: 0; right: 0; bottom: 0; height: 16px; background: linear-gradient(90deg, var(--school) 0 72%, var(--school-2) 72% 100%); z-index: 4; }
+
+/* type */
+.h { margin: 0; font-family: var(--display); font-weight: 800; letter-spacing: -0.035em; line-height: .98; color: var(--ink); text-wrap: balance; }
+.h-xl { font-size: 168px; }
+.h-l { font-size: 128px; }
+.h-m { font-size: 96px; }
+.h-s { font-size: 68px; letter-spacing: -0.025em; line-height: 1.04; }
+.k { color: var(--coral); }
+.sub { margin: 34px 0 0; font-size: 46px; line-height: 1.3; font-weight: 700; color: var(--ink-soft); max-width: 24ch; text-wrap: pretty; }
+.hand { font-family: var(--hand); font-size: 50px; color: var(--coral); transform: rotate(-3deg); display: inline-block; }
+.burst { position: relative; display: inline-block; }
+.burst::after { content: ""; position: absolute; right: -0.5em; top: -0.32em; width: 0.5em; height: 0.5em; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='none' stroke='%23ea5a4a' stroke-width='4.5' stroke-linecap='round'%3E%3Cpath d='M8 30 L4 36'/%3E%3Cpath d='M18 24 L24 6'/%3E%3Cpath d='M26 30 L37 22'/%3E%3C/svg%3E") no-repeat center / contain; }
+
+/* layouts */
+.cols { display: grid; grid-template-columns: 1fr 600px; gap: 70px; height: 100%; align-items: center; }
+.cols > * { min-width: 0; }
+.leftcol { align-self: start; padding-top: 40px; }
+.pic { border-radius: 44px; overflow: hidden; background: var(--sky); height: 680px; box-shadow: 0 30px 60px -34px rgba(23,50,74,.5); }
+.pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pic--card { background: transparent; box-shadow: none; display: flex; justify-content: center; }
+.pic--card img { width: auto; height: 100%; border-radius: 34px; box-shadow: 0 30px 60px -30px rgba(23,50,74,.55); object-fit: contain; }
+.center { display: grid; place-items: center; text-align: center; height: 100%; align-content: center; justify-items: center; }
+.center .sub { margin-inline: auto; max-width: 30ch; }
+
+.facts { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 44px; max-width: 980px; }
+.fact { font-family: var(--display); font-weight: 800; font-size: 34px; padding: 14px 30px; border-radius: 999px; background: var(--card); box-shadow: inset 0 0 0 3px var(--line); }
+.fact b { color: var(--coral); }
+
+.panel { border-radius: 40px; padding: 44px 50px; }
+.panel--sage { background: var(--sage); } .panel--sky { background: var(--sky); } .panel--blush { background: var(--blush); } .panel--sun { background: var(--sun-soft); }
+
+.story-num { font-family: var(--display); font-weight: 800; font-size: 300px; line-height: .8; letter-spacing: -0.06em; color: var(--coral); }
+.timeline { display: flex; gap: 14px; align-items: center; margin-top: 50px; flex-wrap: wrap; }
+.timeline span { font-family: var(--display); font-weight: 800; font-size: 34px; padding: 12px 26px; border-radius: 999px; background: var(--sage); }
+.timeline i { font-style: normal; color: var(--coral); font-weight: 900; font-size: 34px; }
+.timeline span:last-child { background: var(--coral); color: #fff; }
+
+.seven { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 60px; margin-top: 46px; }
+.seven li { list-style: none; display: flex; align-items: center; gap: 24px; font-family: var(--display); font-weight: 800; font-size: 44px; letter-spacing: -0.02em; }
+.seven li span { flex: none; width: 74px; height: 74px; border-radius: 50%; display: grid; place-items: center; background: var(--sky); font-size: 34px; }
+.seven li:nth-child(3n+2) span { background: var(--sage); }
+.seven li:nth-child(3n) span { background: var(--blush); }
+.seven { padding: 0; margin-bottom: 0; }
+
+.bubbles { display: grid; gap: 40px; margin-top: 50px; max-width: 1240px; }
+.bubble-say { position: relative; font-family: var(--display); font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1.12; padding: 30px 46px; border-radius: 46px; background: var(--card); box-shadow: inset 0 0 0 4px var(--ink); max-width: 1100px; }
+.bubble-say::after { content: ""; position: absolute; bottom: -22px; left: 70px; width: 40px; height: 40px; background: var(--card); border-right: 4px solid var(--ink); border-bottom: 4px solid var(--ink); transform: rotate(45deg); }
+.bubble-say:nth-child(2) { margin-left: 120px; background: var(--sage); } .bubble-say:nth-child(2)::after { background: var(--sage); }
+.bubble-say:nth-child(3) { margin-left: 40px; background: var(--sky); } .bubble-say:nth-child(3)::after { background: var(--sky); }
+
+.steps { display: grid; gap: 36px; margin-top: 60px; }
+.step { display: flex; gap: 30px; align-items: center; }
+.step b { flex: none; width: 92px; height: 92px; border-radius: 50%; background: var(--sun-soft); display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 46px; }
+.step p { margin: 0; font-family: var(--display); font-weight: 800; font-size: 50px; letter-spacing: -0.02em; line-height: 1.12; }
+.step p small { display: block; font-family: var(--body); font-weight: 700; font-size: 34px; letter-spacing: 0; color: var(--ink-soft); margin-top: 6px; }
+
+.swaps { display: grid; gap: 26px; margin-top: 60px; }
+.swap { display: grid; grid-template-columns: 1fr 80px 1.15fr; align-items: center; gap: 10px; }
+.swap .no { font-size: 40px; font-weight: 700; color: var(--ink-soft); padding: 22px 34px; border-radius: 30px; background: var(--card); box-shadow: inset 0 0 0 3px var(--line); text-decoration: line-through; text-decoration-color: rgba(234,90,74,.6); text-decoration-thickness: 3px; }
+.swap .arrow { text-align: center; font-size: 56px; color: var(--coral); font-weight: 900; }
+.swap .yes { font-family: var(--display); font-size: 44px; font-weight: 800; letter-spacing: -0.02em; padding: 22px 34px; border-radius: 30px; background: var(--sage); }
+
+.bignums { display: flex; gap: 40px; margin-top: 50px; }
+.bignum { border-radius: 40px; padding: 36px 44px; background: var(--sky); min-width: 0; }
+.bignum strong { display: block; font-family: var(--display); font-weight: 800; font-size: 120px; line-height: 1; letter-spacing: -0.04em; color: var(--ink); }
+.bignum strong em { font-style: normal; color: var(--coral); font-size: 60px; letter-spacing: -0.02em; }
+.bignum span { display: block; font-size: 36px; font-weight: 800; color: var(--ink-soft); margin-top: 10px; }
+.bignum:nth-child(2) { background: var(--sage); }
+.source { margin-top: 26px; font-size: 26px; color: var(--ink-soft); font-weight: 700; }
+
+/* screenshot slide */
+.shot { display: grid; grid-template-columns: 1fr 520px; gap: 70px; height: 100%; align-items: center; }
+.shot-sheet { background: var(--card); border-radius: 44px; padding: 40px 56px 40px; margin-top: -40px; box-shadow: inset 0 0 0 4px var(--ink); }
+.shot-sheet ol { margin: 22px 0 0; padding: 0; display: grid; gap: 12px; counter-reset: n; }
+.shot-sheet li { list-style: none; display: grid; grid-template-columns: 56px 1fr; gap: 18px; align-items: start; font-size: 30px; line-height: 1.22; font-weight: 700; counter-increment: n; }
+.shot-sheet li::before { content: counter(n); width: 52px; height: 52px; border-radius: 50%; background: var(--sage); display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 28px; }
+.shot-sheet li b { font-family: var(--display); font-weight: 800; }
+.snap { display: inline-flex; align-items: center; gap: 16px; background: var(--coral); color: #fff; border-radius: 999px; padding: 16px 34px; font-family: var(--display); font-weight: 800; font-size: 36px; letter-spacing: .02em; }
+.snap svg { width: 44px; height: 44px; }
+.qrbox { background: #fff; border-radius: 36px; padding: 30px; box-shadow: 0 26px 50px -30px rgba(23,50,74,.5); display: grid; justify-items: center; gap: 14px; }
+.qr { width: 320px; height: 320px; display: block; }
+.qrbox p { margin: 0; font-family: var(--display); font-weight: 800; font-size: 32px; }
+.more { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 36px; }
+.more-item { border-radius: 36px; padding: 28px 30px; background: var(--card); box-shadow: inset 0 0 0 3px var(--line); display: grid; gap: 10px; align-content: start; }
+.more-item img { height: 130px; width: 100%; object-fit: contain; }
+.more-item b { font-family: var(--display); font-weight: 800; font-size: 36px; letter-spacing: -0.02em; line-height: 1.05; }
+.more-item span { font-size: 26px; font-weight: 800; color: var(--coral); }
+.more-item .ph { height: 130px; border-radius: 26px; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 34px; text-align: center; padding: 10px; }
+
+/* the Rory camera layer */
+.cam { position: absolute; z-index: 5; border-radius: 50%; overflow: hidden; left: 90px; bottom: 70px; width: 300px; height: 300px; box-shadow: 0 0 0 10px var(--card), 0 0 0 16px var(--school), 0 26px 50px -20px rgba(23,50,74,.6); transition: all .6s cubic-bezier(.2,.7,.1,1); background: #cfd8de; }
+.cam img { width: 100%; height: 100%; object-fit: cover; }
+.cam-label { position: absolute; z-index: 6; left: 110px; bottom: 30px; font-family: var(--hand); font-size: 30px; color: var(--ink); background: var(--sun-soft); padding: 2px 18px; border-radius: 999px; transition: opacity .3s; }
+.stage[data-cam="off"] .cam, .stage[data-cam="off"] .cam-label { opacity: 0; transform: scale(.6); pointer-events: none; }
+.stage[data-cam="full"] .cam { left: 0; bottom: 0; width: 1920px; height: 1080px; border-radius: 0; box-shadow: none; }
+.stage[data-cam="full"] .cam img { object-position: 50% 30%; filter: saturate(.95); }
+.stage[data-cam="full"] .cam-label { left: 50%; transform: translateX(-50%); bottom: 470px; font-size: 44px; padding: 6px 30px; }
+.stage[data-cam="full"] .band { z-index: 7; }
+.stage:not([show-cam]) .cam-label { opacity: 0; }
+
+/* full camera slides: lower third and crest over the footage */
+.slide.is-cam { z-index: 6; padding: 0; }
+.lower { position: absolute; left: 110px; bottom: 110px; display: flex; align-items: center; gap: 30px; background: var(--card); border-radius: 40px; padding: 26px 46px 26px 26px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
+.lower img { width: 120px; height: 120px; object-fit: contain; }
+.lower b { display: block; font-family: var(--display); font-weight: 800; font-size: 52px; letter-spacing: -0.03em; line-height: 1; }
+.lower span { display: block; font-size: 32px; font-weight: 800; color: var(--ink-soft); margin-top: 8px; }
+.lower span em { font-style: normal; color: var(--school); }
+.lower b span { display: inline; font-size: inherit; color: inherit; margin: 0; }
+.cam-top { position: absolute; left: 110px; top: 80px; display: flex; gap: 18px; align-items: center; }
+.cam-top .pill { background: var(--card); }
+.swapflag { position: absolute; right: 110px; top: 80px; background: var(--sun); color: var(--ink); font-family: var(--display); font-weight: 800; font-size: 28px; letter-spacing: .1em; text-transform: uppercase; padding: 14px 26px; border-radius: 18px; }
+
+/* ---------- below the frame ---------- */
+.under { display: grid; gap: 18px; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: start; }
+@media (max-width: 900px) { .under { grid-template-columns: 1fr; } }
+.box { background: var(--card); border-radius: 20px; padding: 20px 22px; box-shadow: inset 0 0 0 1.5px var(--line); min-width: 0; }
+.box h2 { margin: 0 0 4px; font-family: var(--display); font-weight: 800; font-size: 1.1rem; letter-spacing: -0.01em; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 12px; }
+.chip { font-size: .75rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; background: var(--sky); }
+.chip--intro, .chip--outro { background: var(--sun); }
+.chip--main { background: var(--sage); }
+.chip--cam { background: var(--blush); }
+.script { font-size: 1.02rem; line-height: 1.7; max-width: 68ch; }
+.script p { margin: 0 0 .8em; }
+.sw { background: var(--sun-soft); box-shadow: 0 0 0 2px var(--sun); border-radius: 6px; padding: 0 4px; font-weight: 800; }
+.dir { display: block; font-family: var(--hand); color: var(--coral); font-size: 1.12rem; margin: 0 0 .5em; }
+.chk { background: var(--blush); border-radius: 6px; padding: 0 4px; }
+.meta { color: var(--ink-soft); font-size: .88rem; }
+
+.order { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 2px; max-height: 520px; overflow: auto; }
+.order button { width: 100%; display: grid; grid-template-columns: 46px 1fr auto; gap: 10px; align-items: center; text-align: left; padding: 6px 10px; border: 0; background: transparent; border-radius: 10px; cursor: pointer; font-size: .92rem; }
+.order button:hover { background: var(--paper); }
+.order button[aria-current="true"] { background: var(--sky); }
+.order .t { font-variant-numeric: tabular-nums; color: var(--ink-soft); font-weight: 800; font-size: .82rem; }
+.order .seg { font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--sage); }
+.order .seg--intro, .order .seg--outro { background: var(--sun); }
+.total { margin-top: 10px; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.schoolform { display: grid; gap: 12px; }
+.schoolform .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.schoolform label { display: grid; gap: 4px; font-size: .8rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); min-width: 0; }
+.schoolform input[type="text"], .schoolform select { width: 100%; padding: 8px 10px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--paper); font-weight: 700; text-transform: none; letter-spacing: 0; font-size: .95rem; color: var(--ink); }
+.schoolform input[type="color"] { width: 100%; height: 40px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--paper); padding: 3px; }
+.schoolform input[type="file"] { font-size: .85rem; text-transform: none; letter-spacing: 0; font-weight: 700; color: var(--ink); max-width: 100%; }
+.note { font-size: .85rem; color: var(--ink-soft); margin: 0; }
+</style>
+
+<div class="page">
+  <header class="bar">
+    <div>
+      <h1>Back Them at Home <span>·</span> parents' talk, draft 1</h1>
+      <p>The video as it will look. Arrow keys to move. The script for each slide sits underneath. Sample schools are made up.</p>
+    </div>
+    <div class="controls">
+      <button class="btn" id="prev" type="button" aria-label="Previous slide">← Back</button>
+      <span class="count" id="count">1 / 1</span>
+      <button class="btn btn--coral" id="next" type="button" aria-label="Next slide">Next →</button>
+      <button class="btn" id="camlabels" type="button" aria-pressed="true">Show camera notes</button>
+      <button class="btn" id="fs" type="button">Full screen</button>
+    </div>
+  </header>
+
+  <div class="frame-wrap" id="wrap">
+    <div class="stage" id="stage" data-cam="full" show-cam>
+      <div class="cam" id="cam"><img src="img/rory-portrait.webp" alt="Stand in for Rory's camera" id="camimg"></div>
+      <div class="cam-label" id="camlabel">Rory on camera</div>
+      <div class="band"></div>
+
+      <!-- ===================== SCHOOL INTRO (recorded fresh per school) ===================== -->
+      <section class="slide is-cam" data-seg="intro" data-cam="full" data-title="Hello, [school]">
+        <div class="cam-top"><span class="school-tag"><img class="crest" alt=""><span data-s="name"></span></span></div>
+        <div class="swapflag">Filmed fresh for each school</div>
+        <div class="lower"><img class="crest" alt=""><div><b>Rory Gibbs OLY</b><span>Olympic champion, Paris 2024 · for parents at <em data-s="short"></em></span></div></div>
+        <aside class="notes">
+          <span class="dir">Rory to camera, full frame. 60 to 90 seconds. Warm, like a video message to friends.</span>
+          <p>Hello everyone at <span class="sw" data-s="name"></span>. I'm Rory Gibbs.</p>
+          <p>First, a big thank you to <span class="sw" data-s="thanks"></span> for asking me to do this, and to you for giving me twenty minutes of your evening. I know how full evenings get.</p>
+          <p><span class="sw" data-s="d1"></span> <span class="sw" data-s="d2"></span></p>
+          <p>I also know that at <span class="sw" data-s="short"></span> you talk a lot about <span class="sw" data-s="values"></span>. Hold on to those words tonight, because that's what this is all about.</p>
+          <p>Whatever your child is into, sport, music, drama, or just getting through a big set of exams, it's the same stuff underneath. I'll tell you a bit of my story, then give you seven simple things you can do at home. There's a checklist at the end, and it's in the email from school too.</p>
+          <p>So grab a cup of tea, and let's get going.</p>
+        </aside>
+      </section>
+
+      <!-- ===================== MAIN TALK (recorded once) ===================== -->
+      <section class="slide" data-seg="main" data-cam="bubble" data-title="Back Them at Home">
+        <div class="pillrow"><span class="pill">For parents</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="cols">
+          <div class="leftcol">
+            <h2 class="h h-l" style="font-size: 132px">Back them <span class="k burst">at home.</span></h2>
+            <p class="sub">Seven simple ways to support your child, in sport, music, exams and everything they work hard at.</p>
+          </div>
+          <div class="pic"><img src="img/rory-gibbs-illustration.webp" alt="Illustration of Rory sitting by a lake with a football, rugby ball and tennis ball"></div>
+        </div>
+        <aside class="notes">
+          <span class="dir">Main talk starts. Rory shrinks into the circle, bottom left.</span>
+          <p>So, this is Back Them at Home. Seven simple ways to support your child in anything they work hard at.</p>
+          <p>None of them cost money. None of them need you to know anything about the sport, the instrument or the exam. And you can start most of them tonight.</p>
+          <p>But first, let me tell you why I care about this so much.</p>
+        </aside>
+      </section>
+
+      <section class="slide" data-seg="main" data-cam="bubble" data-title="Who I am">
+        <div class="pillrow"><span class="pill">My story</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="cols">
+          <div class="leftcol">
+            <h2 class="h h-l">Olympic <span class="k">champion.</span></h2>
+            <p class="sub">Men's eight, Paris 2024.</p>
+            <div class="facts"><span class="fact"><b>2x</b> World Champion</span><span class="fact"><b>5x</b> European Champion</span><span class="fact"><b>6x</b> World Cup winner</span></div>
+          </div>
+          <div class="pic"><img src="img/rory-portrait.webp" alt="Rory Gibbs holding a Great Britain oar" style="object-position: 30% 30%"></div>
+        </div>
+        <aside class="notes">
+          <p>I'm a rower. In 2024 I won Olympic gold in the men's eight in Paris. Before that I was World Champion twice and European Champion five times.</p>
+          <p>I'm not telling you that to show off. Honestly, the medal is the least interesting part. How I got there is far less impressive than you'd think. I wasn't spotted early. I didn't follow a plan. And I nearly didn't make it at all.</p>
+          <p>That's the bit that's useful to you.</p>
+        </aside>
+      </section>
+
+      <section class="slide t-sage" data-seg="main" data-cam="bubble" data-title="The fast kid">
+        <div class="pillrow"><span class="pill">My story</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="center">
+          <h2 class="h h-xl">I was the <span class="k">fast kid.</span></h2>
+          <p class="sub">Sports day. The national 100m. Quickest on the rugby pitch. Talent did all the work.</p>
+        </div>
+        <aside class="notes">
+          <p>Growing up, I was the fast kid. My dad coached me, and I loved sport from as early as I can remember. I won sports day. I ran the hundred metres at the nationals. On the rugby pitch, I was quicker than everyone.</p>
+          <p>And talent did all the work for me. I never had to listen much, or practise the boring bits, because I was already winning. Everyone told me how talented I was, and I believed them.</p>
+          <p>That turned out to be a problem. Talent was the only thing I'd built.</p>
+        </aside>
+      </section>
+
+      <section class="slide t-blush" data-seg="main" data-cam="bubble" data-title="Then everyone caught up">
+        <div class="pillrow"><span class="pill">My story</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="center">
+          <h2 class="h h-l">Then everyone <span class="k">caught up.</span></h2>
+          <p class="sub">Sore knees. Dropped to the B team. Dyslexic. A levels that didn't go to plan.</p>
+        </div>
+        <aside class="notes">
+          <p>In my teens, it all changed. I got Osgood Schlatter's in both knees, so I was in pain most of the time. Then everyone else hit puberty. They got taller, stronger and faster, and I didn't keep up.</p>
+          <p>I went from the A team to the B team at Millfield, in front of my whole squad. I'm dyslexic, and my A levels didn't go to plan either. I didn't really know who I was anymore.</p>
+          <p>If you've got a child who's an early developer, or a late one, hold on to this. Where they are at twelve tells you very little about where they'll be at twenty five.</p>
+        </aside>
+      </section>
+
+      <section class="slide t-sky" data-seg="main" data-cam="bubble" data-title="Rowing at 18">
+        <div class="pillrow"><span class="pill">My story</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="cols">
+          <div class="leftcol">
+            <div class="story-num">18</div>
+            <h2 class="h h-m" style="margin-top: 20px">My first rowing test. <span class="k">Sick behind a hedge.</span></h2>
+          </div>
+          <div class="panel panel--sun" style="align-self: center">
+            <p class="hand" style="font-size: 64px; margin: 0">Nobody picked me out.</p>
+            <p class="hand" style="font-size: 64px; margin: 20px 0 0; color: var(--ink)">Nobody had a plan for me.</p>
+            <p class="hand" style="font-size: 64px; margin: 20px 0 0">I just kept going back.</p>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>At eighteen, I was off contact sport with a rugby injury. Some friends were rowing, so I gave it a go. It was an hour each way to get to the water.</p>
+          <p>In my first ever two kilometre test, I went off far too fast and was sick behind a hedge. Not a great start.</p>
+          <p>But I liked the people, and I kept turning up. Nobody picked me out. Nobody had a plan for me. I just kept going back.</p>
+        </aside>
+      </section>
+
+      <section class="slide t-sage" data-seg="main" data-cam="bubble" data-title="The seventh boat">
+        <div class="pillrow"><span class="pill">My story</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div style="padding-top: 40px">
+          <h2 class="h h-l">I started in the <span class="k">seventh boat.</span></h2>
+          <div class="timeline"><span>7th boat</span><i>→</i><span>1st boat</span><i>→</i><span>Henley</span><i>→</i><span>GB under 23</span><i>→</i><span>GB senior team</span></div>
+          <p class="sub" style="max-width: 30ch">None of that was talent. It was showing up, listening, and being patient.</p>
+        </div>
+        <aside class="notes">
+          <p>I went to Oxford Brookes, after a foundation year because of those A levels. I started in the seventh boat. Seventh. Then I moved up, boat by boat, to the first boat. We won at Henley. I rowed for Great Britain under 23s. I got a first class degree, and I worked at Williams F1 while doing a part time master's, still trying to make the national team. And I did.</p>
+          <p>None of that was talent. It was showing up. Listening to feedback. Being patient when progress was slow. Character, built quietly, one session at a time.</p>
+        </aside>
+      </section>
+
+      <section class="slide t-blush" data-seg="main" data-cam="bubble" data-title="Tokyo 2021">
+        <div class="pillrow"><span class="pill">My story</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="cols">
+          <div class="leftcol" style="padding-left: 0">
+            <div class="story-num" style="color: var(--ink)">4th</div>
+            <h2 class="h h-m" style="margin-top: 20px">Tokyo 2021.</h2>
+          </div>
+          <div class="panel panel--blush" style="background: var(--card); box-shadow: inset 0 0 0 4px var(--line)">
+            <p class="h h-s">Same talent.<br>Same fitness.</p>
+            <p class="h h-s k" style="margin-top: 24px">I'd lost the habits that built me.</p>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Then came Tokyo. The Games were put back a year because of COVID. I had my tonsils out, and afterwards I developed health anxiety. I couldn't sleep properly. I started thinking about results instead of the job in front of me. I worried about selection. And I didn't tell anyone how I was really feeling.</p>
+          <p>In the Olympic final, we nearly crashed into the Italian boat. We came fourth. I'm proud I was there, but I wasn't the athlete I could have been.</p>
+          <p>And here's why I'm telling you. It wasn't my talent, and it wasn't my fitness. I'd lost the habits that built me. Talking. Focusing on what I could control. Being honest about how I felt.</p>
+        </aside>
+      </section>
+
+      <section class="slide t-sun" data-seg="main" data-cam="bubble" data-title="Paris 2024">
+        <div class="pillrow"><span class="pill">My story</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="center">
+          <h2 class="h h-xl">Paris 2024. <span class="k burst">Gold.</span></h2>
+          <p class="sub">Porridge, forty five quiet minutes, and three years of small choices.</p>
+        </div>
+        <aside class="notes">
+          <p>After Tokyo, I did the work. I had therapy, and I finally understood how my body reacted to stress. It took about six months to love rowing again. Then we became World Champions, and World Champions again the next year.</p>
+          <p>Those three years were different. I talked more. I focused on the process, not the result.</p>
+          <p>On the morning of the Olympic final in Paris, I ate a bowl of porridge and sat quietly for forty five minutes. I'd noticed a sore hamstring, and I let it go. I said to myself, it doesn't matter, I'm ready. And I was. That calm wasn't luck. It had been built, over three years of small choices.</p>
+          <p>We won gold.</p>
+        </aside>
+      </section>
+
+      <section class="slide" data-seg="main" data-cam="bubble" data-title="The big idea">
+        <div class="pillrow"><span class="pill">The big idea</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="center">
+          <h2 class="h h-l" style="max-width: 15ch">Talent opens the door. <span class="k">Character</span> decides how far you walk through it.</h2>
+        </div>
+        <aside class="notes">
+          <span class="dir">Slow down. Let this one sit.</span>
+          <p>So here's the one line I want you to remember from tonight.</p>
+          <p>Talent opens the door. Character decides how far you walk through it.</p>
+          <p>Talent made me fast as a kid. Character made me an Olympic champion. And talent is mostly luck. Character can be built, by anyone, at any age. That's good news for every child, and every parent watching.</p>
+        </aside>
+      </section>
+
+      <section class="slide t-sage" data-seg="main" data-cam="bubble" data-title="Character is built at home">
+        <div class="pillrow"><span class="pill">The big idea</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div style="padding-top: 30px">
+          <h2 class="h h-l">Character is built <span class="k">at home.</span></h2>
+          <div class="facts" style="max-width: 1200px"><span class="fact">In the car</span><span class="fact">At the kitchen table</span><span class="fact">At 10pm, the night before a test</span></div>
+          <p class="sub" style="max-width: 34ch">A match, a piano exam, a school play and a maths test all feel the same to a child.</p>
+        </div>
+        <aside class="notes">
+          <p>And this is the bit I really want you to hear. Character isn't mostly built on the pitch or in the music room. It's built at home. In the car. At the kitchen table. In the chat at ten o'clock at night when they can't sleep before a test.</p>
+          <p>Coaches and teachers get them for a few hours a week. You get the rest.</p>
+          <p>And you don't need to know anything about rowing, or the violin, or GCSE chemistry. A match, a piano exam, a school play and a maths test all feel the same to a child. Big moment. People watching. Scared of letting someone down. So everything I'm about to say works for all of it.</p>
+        </aside>
+      </section>
+
+      <section class="slide" data-seg="main" data-cam="bubble" data-title="Seven things that help">
+        <div class="pillrow"><span class="pill">Seven things</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div>
+          <h2 class="h h-m">Seven things that <span class="k">help at home.</span></h2>
+          <ol class="seven">
+            <li><span>1</span>The ride home</li>
+            <li><span>2</span>Big moments</li>
+            <li><span>3</span>Fuel and sleep</li>
+            <li><span>4</span>Goals they control</li>
+            <li><span>5</span>Their dream</li>
+            <li><span>6</span>Support, not pressure</li>
+            <li><span>7</span>Let them struggle</li>
+          </ol>
+        </div>
+        <aside class="notes">
+          <p>So here are seven things that help at home. The ride home. Big moments. Fuel and sleep. Goals they control. Their dream. Support without pressure. And letting them struggle.</p>
+          <p>No need to write them down. At the end there's one slide with all seven to screenshot, and it's in your email too.</p>
+        </aside>
+      </section>
+
+      <!-- 1 -->
+      <section class="slide" data-seg="main" data-cam="bubble" data-title="1. The ride home">
+        <div class="pillrow"><span class="pill">The ride home</span><span class="pill-line"></span><span class="pill-dot">1</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="center">
+          <h2 class="h h-l">Talk <span class="k">after,</span> not during.</h2>
+          <p class="sub">When they get in the car, they're still in the match.</p>
+        </div>
+        <aside class="notes">
+          <p>Number one. The ride home.</p>
+          <p>Two American coaches, Bruce Brown and Rob Miller, spent around thirty years asking college athletes about their parents. Many told them one of their worst memories of sport was the car journey home. The replay. The questions. The advice.</p>
+          <p>When they asked what their parents said that made them feel great, the answer was simple. Six words. I love to watch you play.</p>
+          <p>When your child gets in the car, they're still in it. Heart racing. Maybe embarrassed, maybe angry, maybe just starving. It's not the moment for feedback. Even good feedback.</p>
+        </aside>
+      </section>
+      <section class="slide" data-seg="main" data-cam="bubble" data-title="1. Try saying">
+        <div class="pillrow"><span class="pill">Try saying</span><span class="pill-line"></span><span class="pill-dot">1</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="bubbles">
+          <div class="bubble-say">"I loved watching you today."</div>
+          <div class="bubble-say">"What did you enjoy?"</div>
+          <div class="bubble-say">"Want to talk about it now, or later?"</div>
+        </div>
+        <aside class="notes">
+          <p>So, talk after, not during. Let the feelings settle first.</p>
+          <p>Start with something like, I loved watching you today. Then ask an open question. What did you enjoy? Or, do you want to talk about it now, or later?</p>
+          <p>Let them lead. If they want your view, they'll ask. If they don't want to talk at all, that's fine. Put the radio on. Get them some food. You being there says more than anything you could add.</p>
+        </aside>
+      </section>
+
+      <!-- 2 -->
+      <section class="slide t-sun" data-seg="main" data-cam="bubble" data-title="2. Big moments">
+        <div class="pillrow"><span class="pill">Big moments</span><span class="pill-line"></span><span class="pill-dot">2</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="center">
+          <h2 class="h h-l">Nerves mean <span class="k">it matters.</span></h2>
+          <p class="sub">A cup final, a grade five, a mock exam and an audition all feel the same.</p>
+        </div>
+        <aside class="notes">
+          <p>Number two. Tests and big moments.</p>
+          <p>To a child, a cup final, a grade five piano exam, a mock and an audition all feel the same. Something matters, and people will see how it goes.</p>
+          <p>Nerves are normal. Usually they just mean your child cares. <span class="chk">[Rory to check]</span> I had nerves before every big race. In Tokyo, I let them run the show. By Paris, I'd learned to notice them and let them go. The feeling is the body getting ready. It isn't a sign that something's wrong.</p>
+        </aside>
+      </section>
+      <section class="slide t-sun" data-seg="main" data-cam="bubble" data-title="2. Try this">
+        <div class="pillrow"><span class="pill">Try this</span><span class="pill-line"></span><span class="pill-dot">2</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="steps">
+          <div class="step"><b>1</b><p>Keep the routine boring.<small>Bag packed early. Same kind of dinner. Same bedtime.</small></p></div>
+          <div class="step"><b>2</b><p>Give the feeling a name.<small>"That's your body getting ready."</small></p></div>
+          <div class="step"><b>3</b><p>Say it before, not after.<small>"Whatever happens, I'm proud of how you've prepared."</small></p></div>
+        </div>
+        <aside class="notes">
+          <p>Three things help.</p>
+          <p>First, keep the routine boring. Bag packed early. Same kind of dinner. Same bedtime. My Olympic final started with porridge and sitting quietly.</p>
+          <p>Second, give the feeling a name. That's your body getting ready. Nerves and excitement feel almost the same inside, so some people find it helps to say, I'm excited, instead of, I'm nervous.</p>
+          <p>Third, perspective, and say it before, not after. Whatever happens, I'm proud of how you've prepared. That lifts the weight of your opinion off their shoulders, so they can get on with it.</p>
+        </aside>
+      </section>
+
+      <!-- 3 -->
+      <section class="slide t-sky" data-seg="main" data-cam="bubble" data-title="3. Fuel and sleep">
+        <div class="pillrow"><span class="pill">Fuel and sleep</span><span class="pill-line"></span><span class="pill-dot">3</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div style="padding-top: 10px">
+          <h2 class="h h-l">Sleep is <span class="k">training.</span></h2>
+          <div class="bignums">
+            <div class="bignum"><strong>9 to 12 <em>hours</em></strong><span>ages 6 to 12</span></div>
+            <div class="bignum"><strong>8 to 10 <em>hours</em></strong><span>ages 13 to 18</span></div>
+          </div>
+          <p class="source">Recommended sleep, American Academy of Sleep Medicine, 2016</p>
+        </div>
+        <aside class="notes">
+          <p>Number three. Fuel and sleep. The least exciting point, and maybe the most important.</p>
+          <p>In the national team, I slept around twelve hours a night. Sleep was part of training.</p>
+          <p>For children, sleep experts recommend nine to twelve hours a night for ages six to twelve, and eight to ten hours for teenagers. A tired child finds everything harder. Learning, training, managing their mood. Including being nice to you.</p>
+        </aside>
+      </section>
+      <section class="slide t-sky" data-seg="main" data-cam="bubble" data-title="3. Try this">
+        <div class="pillrow"><span class="pill">Try this</span><span class="pill-line"></span><span class="pill-dot">3</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="steps">
+          <div class="step"><b>1</b><p>Phones charge outside the bedroom.<small>For everyone. You included.</small></p></div>
+          <div class="step"><b>2</b><p>Regular meals, and a water bottle in the bag.<small>Breakfast matters most on the big days.</small></p></div>
+          <div class="step"><b>3</b><p>Protect the routine, not one early night.<small>Worried about eating or sleep? Talk to your GP.</small></p></div>
+        </div>
+        <aside class="notes">
+          <p>You don't need a meal plan. Keep it simple.</p>
+          <p>The biggest one for most families is phones. Try charging them outside the bedroom. For everyone, you included.</p>
+          <p>Regular meals, especially breakfast before a big day, and a water bottle in the bag. And protect the routine, not just one early night before a match.</p>
+          <p>If you're ever worried about your child's eating or sleep, speak to your GP. This is just the everyday stuff that helps.</p>
+        </aside>
+      </section>
+
+      <!-- 4 -->
+      <section class="slide t-sage" data-seg="main" data-cam="bubble" data-title="4. Goals they control">
+        <div class="pillrow"><span class="pill">Goals</span><span class="pill-line"></span><span class="pill-dot">4</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="cols">
+          <div class="leftcol">
+            <h2 class="h h-l">Goals they can <span class="k">control.</span></h2>
+            <p class="sub">A goal gives you direction. A system gets you there.</p>
+          </div>
+          <div class="pic pic--card"><img src="img/card-07-front.webp" alt="Athlete Deck card 07, Goals vs systems"></div>
+        </div>
+        <aside class="notes">
+          <p>Number four. Goals they control.</p>
+          <p>Most children set goals like, I want to win, or, I want a grade seven. That's fine as a direction. But they can't control it. Someone else might be better on the day.</p>
+          <p>When I started in the seventh boat, if my only goal had been the Olympics, I'd have given up. Instead it was the next boat. Then the next session. Then one thing in my technique.</p>
+          <p>This is one of the cards from my Athlete Deck. A goal gives you direction. A system gets you there.</p>
+        </aside>
+      </section>
+      <section class="slide t-sage" data-seg="main" data-cam="bubble" data-title="4. Try this">
+        <div class="pillrow"><span class="pill">Try this</span><span class="pill-line"></span><span class="pill-dot">4</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="steps">
+          <div class="step"><b>1</b><p>One small goal a week, in their control.<small>"Scales for ten minutes a day." "Ask the coach one question."</small></p></div>
+          <div class="step"><b>2</b><p>Write it down. Stick it on the fridge.</p></div>
+          <div class="step"><b>3</b><p>Check it together on Sunday.<small>"How did it go? What's next?"</small></p></div>
+        </div>
+        <aside class="notes">
+          <p>So try this. Once a week, ask them for one small goal that's completely in their control. Practise scales for ten minutes every day. Ask the coach one question at training. Be in bed by half nine four nights this week.</p>
+          <p>Write it down and stick it on the fridge. Then check it together on Sunday. Not as a test. Just, how did it go? What's next?</p>
+          <p>Small steps, written down, checked together. That's how I got from the seventh boat to the Olympics.</p>
+        </aside>
+      </section>
+
+      <!-- 5 -->
+      <section class="slide t-blush" data-seg="main" data-cam="bubble" data-title="5. Their dream">
+        <div class="pillrow"><span class="pill">Their dream</span><span class="pill-line"></span><span class="pill-dot">5</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="center">
+          <h2 class="h h-l">Their dream. <span class="k">Your support.</span></h2>
+          <p class="sub">Nobody planned rowing for me. I found it at 18, because I was free to try.</p>
+        </div>
+        <aside class="notes">
+          <p>Number five. Their future, their dream.</p>
+          <p>Lots of us have a dream for our children. A scholarship. A county place. A particular school. That comes from love. But it only really works if it's their dream.</p>
+          <p>Nobody planned rowing for me. I found it at eighteen, by accident, because I was free to try something new. If someone had decided at twelve that I was a rugby player and that was that, I'd never have sat in a boat.</p>
+          <p>Let them try lots of things. Let them change their mind.</p>
+        </aside>
+      </section>
+      <section class="slide t-blush" data-seg="main" data-cam="bubble" data-title="5. Try asking">
+        <div class="pillrow"><span class="pill">Try asking</span><span class="pill-line"></span><span class="pill-dot">5</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="bubbles">
+          <div class="bubble-say">"What do you love about it?"</div>
+          <div class="bubble-say">"What would you like to get better at?"</div>
+          <div class="bubble-say">"How can I help, and is there anything I do that doesn't?"</div>
+        </div>
+        <aside class="notes">
+          <p>So ask, and then really listen. What do you love about it? What would you like to get better at?</p>
+          <p>And the brave one. How can I help, and is there anything I do that doesn't help?</p>
+          <p>You might not love every answer. But if they know their dream is safe with you, they'll keep telling you about it. That's worth more than any scholarship.</p>
+        </aside>
+      </section>
+
+      <!-- 6 -->
+      <section class="slide" data-seg="main" data-cam="bubble" data-title="6. Support, not pressure">
+        <div class="pillrow"><span class="pill">Support, not pressure</span><span class="pill-line"></span><span class="pill-dot">6</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="center">
+          <h2 class="h h-l">You are <span class="k burst">the mirror.</span></h2>
+          <p class="sub">They watch your face more than the scoreboard.</p>
+        </div>
+        <aside class="notes">
+          <p>Number six. Support without pressure.</p>
+          <p>Children watch your face more than the scoreboard. When they come off the pitch or out of the exam hall, they look at you to find out how it went. Your reaction is the mirror they look into.</p>
+          <p>If you only light up when they win, they learn that winning is what makes you happy. If you light up when they've worked hard and been a good teammate, they learn that's what matters.</p>
+        </aside>
+      </section>
+      <section class="slide" data-seg="main" data-cam="bubble" data-title="6. Swap this for this">
+        <div class="pillrow"><span class="pill">Swap this</span><span class="pill-line"></span><span class="pill-dot">6</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="swaps">
+          <div class="swap"><span class="no">"You're so talented."</span><span class="arrow">→</span><span class="yes">"You worked so hard for that."</span></div>
+          <div class="swap"><span class="no">"Well done for winning."</span><span class="arrow">→</span><span class="yes">"I loved how you kept going after that mistake."</span></div>
+          <div class="swap"><span class="no">"Why didn't you...?"</span><span class="arrow">→</span><span class="yes">"What did you learn?"</span></div>
+        </div>
+        <aside class="notes">
+          <p>So praise the things they control. Effort, courage, kindness, how they handled a mistake.</p>
+          <p>Instead of, you're so talented, try, you worked so hard for that. Instead of, well done for winning, try, I loved how you kept going after that mistake. Instead of, why didn't you, try, what did you learn?</p>
+          <p>I was told I was talented my whole childhood. It didn't help me one bit when things got hard.</p>
+        </aside>
+      </section>
+
+      <!-- 7 -->
+      <section class="slide t-sun" data-seg="main" data-cam="bubble" data-title="7. Let them struggle">
+        <div class="pillrow"><span class="pill">Challenge them</span><span class="pill-line"></span><span class="pill-dot">7</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="cols">
+          <div class="leftcol">
+            <h2 class="h h-l">Let them <span class="k">struggle</span> a little.</h2>
+            <p class="sub">Kindness and high standards go together.</p>
+          </div>
+          <div class="pic pic--card"><img src="img/card-09-front.webp" alt="Athlete Deck card 09, Hard moments"></div>
+        </div>
+        <aside class="notes">
+          <p>Number seven. Challenge them.</p>
+          <p>Kindness and high standards go together. You can love them completely and still expect them to do hard things.</p>
+          <p>When I was dropped to the B team, I sulked for a bit. Then I went back to the coach and asked one question. What's the one thing I need to fix first? He told me. I worked on it. That question changed everything. Nobody rescued me, and I'm grateful. The struggle is where the growth happens.</p>
+        </aside>
+      </section>
+      <section class="slide t-sun" data-seg="main" data-cam="bubble" data-title="7. Try this">
+        <div class="pillrow"><span class="pill">Try this</span><span class="pill-line"></span><span class="pill-dot">7</span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="steps">
+          <div class="step"><b>1</b><p>Count to ten before you rescue.</p></div>
+          <div class="step"><b>2</b><p>Ask, "What do you think you could try?"</p></div>
+          <div class="step"><b>3</b><p>Hold the standard, warmly.<small>"I know this is hard. I also know you can do hard things."</small></p></div>
+        </div>
+        <aside class="notes">
+          <p>So when they're stuck, wait before you rescue. Count to ten in your head. Then ask, what do you think you could try?</p>
+          <p>Let them email the coach themselves. Let them sort out their own kit. Let them have a go at the hard maths before you jump in.</p>
+          <p>And hold the standard, warmly. I know this is hard. I also know you can do hard things. A little struggle now, with you right beside them, is the best training there is.</p>
+        </aside>
+      </section>
+
+      <!-- checklist -->
+      <section class="slide t-sage" data-seg="main" data-cam="off" data-title="Screenshot this">
+        <div class="pillrow"><span class="pill">Your checklist</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="shot" style="grid-template-columns: 1fr 440px">
+          <div class="shot-sheet">
+            <h2 class="h h-s">Seven ways to back your child <span class="k">at home</span></h2>
+            <ol>
+              <li><span><b>The ride home.</b> Ask what they enjoyed before anything else.</span></li>
+              <li><span><b>Big moments.</b> Boring routine, and "I'm proud of how you prepared" before it starts.</span></li>
+              <li><span><b>Fuel and sleep.</b> Phones out of the bedroom. Regular meals. Water bottle.</span></li>
+              <li><span><b>Goals.</b> One small goal they control, on the fridge, checked on Sunday.</span></li>
+              <li><span><b>Their dream.</b> Ask what they want, then listen.</span></li>
+              <li><span><b>Support.</b> Praise effort and character, not just results.</span></li>
+              <li><span><b>Challenge.</b> Count to ten before you rescue.</span></li>
+            </ol>
+          </div>
+          <div class="center" style="gap: 30px">
+            <span class="snap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Screenshot this</span>
+            <p class="hand" style="font-size: 54px">Pause the video now.</p>
+          </div>
+        </div>
+        <aside class="notes">
+          <span class="dir">Camera off. Hold this slide on screen for at least 8 seconds of silence after speaking.</span>
+          <p>So here they are. Seven ways to back your child at home.</p>
+          <p>Pause the video and screenshot this now. It's also in the email from school as a one page checklist, so you can stick it on the fridge.</p>
+        </aside>
+      </section>
+
+      <!-- keep it -->
+      <section class="slide" data-seg="main" data-cam="bubble" data-title="Keep it">
+        <div class="pillrow"><span class="pill">Keep going</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div style="display: grid; grid-template-columns: 1fr 400px; gap: 60px; align-items: start; margin-top: -30px">
+          <div>
+            <h2 class="h h-m">Get the checklist <span class="k">as a PDF.</span></h2>
+            <p class="sub" style="max-width: 26ch">Scan the code, or go to rorygibbs.com/checklist</p>
+          </div>
+          <div class="qrbox"><img class="qr" src="img/qr-checklist.svg" alt="QR code for rorygibbs.com/checklist"><p>rorygibbs.com/checklist</p></div>
+        </div>
+        <div class="more">
+          <div class="more-item"><img src="img/book-cover.webp" alt="The Athlete: Built Not Born book cover"><b>The book</b><span>Out now</span></div>
+          <div class="more-item"><img src="img/athlete-deck-box.webp" alt="The Athlete Deck box"><b>The Athlete Deck</b><span>93 cards · coming soon</span></div>
+          <div class="more-item"><div class="ph" style="background: var(--sky)">Your coach in your pocket</div><b>The app</b><span>Coming soon</span></div>
+          <div class="more-item"><div class="ph" style="background: var(--sage)">For athletes and parents</div><b>Courses</b><span>Coming soon</span></div>
+        </div>
+        <aside class="notes">
+          <p>If you want the checklist as a PDF, scan this code, or go to rorygibbs.com slash checklist.</p>
+          <p>If you'd like to go deeper, my book, The Athlete: Built Not Born, is out now. I'm also building The Athlete Deck, ninety three cards of practical tools for young athletes and parents, plus an app and some courses. They're coming soon, and you can hear about them first at the same link.</p>
+          <p>No pressure at all. The checklist is the important bit.</p>
+        </aside>
+      </section>
+
+      <!-- close -->
+      <section class="slide t-blush" data-seg="main" data-cam="bubble" data-title="Pick one">
+        <div class="pillrow"><span class="pill">This week</span><span class="pill-line"></span><span class="school-tag"><img class="crest" alt=""><span data-s="short"></span></span></div>
+        <div class="center">
+          <h2 class="h h-xl">Pick <span class="k burst">one.</span></h2>
+          <p class="sub">Not all seven. Just one, this week. Then another.</p>
+          <p class="h h-s" style="margin-top: 60px">Built. <span class="k">Not born.</span></p>
+        </div>
+        <aside class="notes">
+          <p>One last thing. You don't need to do all seven. Please don't try to.</p>
+          <p>Pick one. Just one, this week. Maybe it's the ride home. Maybe it's the phones outside the bedroom. Do that one well, then pick another.</p>
+          <p>That's how character gets built, in them and in us. Small choices that nobody else sees. Built, not born.</p>
+        </aside>
+      </section>
+
+      <!-- ===================== SCHOOL OUTRO (recorded fresh per school) ===================== -->
+      <section class="slide is-cam" data-seg="outro" data-cam="full" data-title="Thank you, [school]">
+        <div class="cam-top"><span class="school-tag"><img class="crest" alt=""><span data-s="name"></span></span></div>
+        <div class="swapflag">Filmed fresh for each school</div>
+        <div class="lower"><img class="crest" alt=""><div><b>Thank you, <span data-s="short"></span></b><span>Your checklist is in the email from school</span></div></div>
+        <aside class="notes">
+          <span class="dir">Back to full frame. 45 to 60 seconds.</span>
+          <p>Thank you so much for watching, <span class="sw" data-s="short"></span>.</p>
+          <p><span class="sw" data-s="outro"></span></p>
+          <p>And thank you again to <span class="sw" data-s="thanks"></span>. Remember, the checklist is in the email from school, so keep it somewhere you'll see it.</p>
+          <p>Your children are lucky to have people in their corner. Take care.</p>
+        </aside>
+      </section>
+    </div>
+  </div>
+
+  <div class="under">
+    <section class="box" aria-live="polite">
+      <h2 id="s-title">Script</h2>
+      <div class="chips" id="s-chips"></div>
+      <div class="script" id="s-body"></div>
+      <p class="meta" id="s-meta"></p>
+    </section>
+
+    <div style="display: grid; gap: 18px; min-width: 0">
+      <section class="box">
+        <h2>Swap in a school</h2>
+        <p class="note">This is how each school's version gets made. Change these and every slide updates.</p>
+        <form class="schoolform" id="schoolform" autocomplete="off">
+          <label for="f-demo">Sample school (made up)
+            <select id="f-demo"></select>
+          </label>
+          <div class="row">
+            <label for="f-name">School name<input type="text" id="f-name"></label>
+            <label for="f-short">Short name<input type="text" id="f-short"></label>
+          </div>
+          <div class="row">
+            <label for="f-c1">Main colour<input type="color" id="f-c1"></label>
+            <label for="f-c2">Second colour<input type="color" id="f-c2"></label>
+            <label for="f-crest">Crest (PNG or SVG)<input type="file" id="f-crest" accept="image/*"></label>
+          </div>
+          <label for="f-thanks">Who to thank<input type="text" id="f-thanks"></label>
+          <label for="f-d1">School detail 1<input type="text" id="f-d1"></label>
+          <label for="f-d2">School detail 2<input type="text" id="f-d2"></label>
+          <label for="f-values">School values<input type="text" id="f-values"></label>
+          <label for="f-outro">Outro line<input type="text" id="f-outro"></label>
+        </form>
+      </section>
+      <section class="box">
+        <h2>Running order</h2>
+        <ol class="order" id="order"></ol>
+        <p class="total" id="total"></p>
+        <p class="note">Timings are estimated from the script at 150 words a minute.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var SCHOOLS = [
+    { name: "Hillcrest Prep School", short: "Hillcrest", c1: "#1f3d7a", c2: "#c9a227",
+      thanks: "Mr Reid and the PTA",
+      d1: "I hear the Year 6s are about to move up to senior school, which is a big step for them and for you.",
+      d2: "And congratulations to the under 11 netball team on a brilliant season.",
+      values: "kindness, courage and curiosity",
+      outro: "Good luck to all the Year 6s with the move up. Enjoy every minute of it." },
+    { name: "St Aldric's College", short: "St Aldric's", c1: "#7a1f3d", c2: "#e2c98f",
+      thanks: "Dr Morgan and the Friends of St Aldric's",
+      d1: "I know mock exams start in a few weeks, so the timing of this one is good.",
+      d2: "And well done to the choir. I hear the autumn concert was something special.",
+      values: "service and resilience",
+      outro: "Good luck to everyone sitting mocks. Look after yourselves, and each other." },
+    { name: "Westbrook Academy", short: "Westbrook", c1: "#1e6b52", c2: "#f2b544",
+      thanks: "Ms Okafor and the PE department",
+      d1: "I hear you've got a brand new Year 7 just settling in.",
+      d2: "And good luck to everyone heading to the county cross country next month.",
+      values: "respect, ambition and teamwork",
+      outro: "Good luck at the cross country. Run your own race." }
+  ];
+  var WPM = 150;
+  var state = Object.assign({}, SCHOOLS[0]);
+  var customCrest = null;
+
+  var stage = document.getElementById("stage");
+  var wrap = document.getElementById("wrap");
+  var slides = Array.prototype.slice.call(stage.querySelectorAll(".slide"));
+  var idx = 0;
+  try { var saved = parseInt(localStorage.getItem("bth-slide"), 10); if (saved >= 0 && saved < slides.length) idx = saved; } catch (e) {}
+
+  function initials(n) {
+    return n.replace(/[^A-Za-z' ]/g, "").split(" ").filter(function (w) { return w && !/^(school|college|academy|prep|the|of)$/i.test(w); })
+      .slice(0, 2).map(function (w) { return w.replace("'", "")[0].toUpperCase(); }).join("") || "S";
+  }
+  function crestSVG(name, c1, c2) {
+    var ini = initials(name);
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 116">' +
+      '<path d="M50 3 L94 16 V54 C94 84 74 103 50 113 C26 103 6 84 6 54 V16 Z" fill="' + c1 + '" stroke="' + c2 + '" stroke-width="6"/>' +
+      '<path d="M6 40 H94" stroke="' + c2 + '" stroke-width="5"/>' +
+      '<circle cx="50" cy="22" r="7" fill="' + c2 + '"/>' +
+      '<text x="50" y="84" font-family="Georgia, serif" font-size="34" font-weight="700" text-anchor="middle" fill="#fff">' + ini + '</text></svg>';
+    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  }
+  function words(el) { return (el.textContent || "").replace(/\[[^\]]*\]/g, "").trim().split(/\s+/).filter(Boolean).length; }
+  function fmt(sec) { sec = Math.round(sec); return Math.floor(sec / 60) + ":" + String(sec % 60).padStart(2, "0"); }
+
+  function applySchool() {
+    stage.style.setProperty("--school", state.c1);
+    stage.style.setProperty("--school-2", state.c2);
+    var crest = customCrest || crestSVG(state.name, state.c1, state.c2);
+    stage.querySelectorAll("img.crest").forEach(function (img) { img.src = crest; img.alt = state.name + " crest"; });
+    document.querySelectorAll("[data-s]").forEach(function (el) { el.textContent = state[el.getAttribute("data-s")] || ""; });
+    slides.forEach(function (s) { s._title = s.getAttribute("data-title").replace("[school]", state.short); });
+    buildOrder();
+    show(idx);
+  }
+
+  function buildOrder() {
+    var ol = document.getElementById("order"); ol.innerHTML = "";
+    var t = 0;
+    slides.forEach(function (s, i) {
+      var notes = s.querySelector(".notes");
+      var dirs = notes.querySelectorAll(".dir"); var w = words(notes);
+      dirs.forEach(function (d) { w -= words(d); });
+      s._start = t; s._dur = w / WPM * 60 + (s.getAttribute("data-cam") === "off" ? 8 : 2);
+      t += s._dur;
+      var li = document.createElement("li");
+      var b = document.createElement("button"); b.type = "button";
+      var seg = s.getAttribute("data-seg");
+      b.innerHTML = '<span class="t">' + fmt(s._start) + '</span><span>' + s._title + '</span><span class="seg seg--' + seg + '">' + (seg === "main" ? "main" : seg) + '</span>';
+      b.addEventListener("click", function () { show(i); wrap.scrollIntoView({ behavior: "smooth", block: "nearest" }); });
+      li.appendChild(b); ol.appendChild(li);
+    });
+    var intro = 0, main = 0, outro = 0;
+    slides.forEach(function (s) { var g = s.getAttribute("data-seg"); if (g === "intro") intro += s._dur; else if (g === "outro") outro += s._dur; else main += s._dur; });
+    document.getElementById("total").textContent = "Total about " + fmt(t) + "  ·  intro " + fmt(intro) + ", main " + fmt(main) + ", outro " + fmt(outro);
+  }
+
+  var CAMTEXT = { full: "Camera: Rory full frame", bubble: "Camera: Rory in the circle", off: "Camera: off, slide only" };
+  var SEGTEXT = { intro: "School intro · swap per school", main: "Main talk · recorded once", outro: "School outro · swap per school" };
+
+  function show(i) {
+    idx = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function (s, k) { s.classList.toggle("is-active", k === idx); });
+    var s = slides[idx];
+    var cam = s.getAttribute("data-cam");
+    stage.setAttribute("data-cam", cam);
+    document.getElementById("camimg").src = cam === "full" ? "img/rory-portrait.webp" : "img/rory-face.webp";
+    document.getElementById("camlabel").textContent = cam === "full" ? "Stand in: Rory filmed to camera" : "Rory on camera";
+    document.getElementById("count").textContent = (idx + 1) + " / " + slides.length;
+    document.getElementById("s-title").textContent = (idx + 1) + ". " + s._title;
+    var seg = s.getAttribute("data-seg");
+    document.getElementById("s-chips").innerHTML = '<span class="chip chip--' + seg + '">' + SEGTEXT[seg] + '</span><span class="chip chip--cam">' + CAMTEXT[cam] + '</span>';
+    document.getElementById("s-body").innerHTML = s.querySelector(".notes").innerHTML;
+    document.getElementById("s-meta").textContent = "Starts at about " + fmt(s._start) + ", lasts about " + fmt(s._dur) + ".";
+    document.querySelectorAll("#order button").forEach(function (b, k) { b.setAttribute("aria-current", k === idx ? "true" : "false"); });
+    try { localStorage.setItem("bth-slide", String(idx)); } catch (e) {}
+  }
+
+  function fit() { stage.style.transform = "scale(" + (wrap.clientWidth / 1920) + ")"; }
+  window.addEventListener("resize", fit);
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(wrap);
+  fit();
+
+  document.getElementById("prev").addEventListener("click", function () { show(idx - 1); });
+  document.getElementById("next").addEventListener("click", function () { show(idx + 1); });
+  document.addEventListener("keydown", function (e) {
+    if (/input|select|textarea/i.test(e.target.tagName)) return;
+    if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); show(idx + 1); }
+    if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(idx - 1); }
+  });
+  var camBtn = document.getElementById("camlabels");
+  camBtn.addEventListener("click", function () {
+    var on = camBtn.getAttribute("aria-pressed") !== "true";
+    camBtn.setAttribute("aria-pressed", on ? "true" : "false");
+    if (on) stage.setAttribute("show-cam", ""); else stage.removeAttribute("show-cam");
+    stage.querySelectorAll(".swapflag").forEach(function (f) { f.hidden = !on; });
+  });
+  document.getElementById("fs").addEventListener("click", function () {
+    var p = wrap.requestFullscreen ? wrap.requestFullscreen() : null;
+    if (p && p.catch) p.catch(function () {});
+  });
+
+  // school form
+  var demo = document.getElementById("f-demo");
+  SCHOOLS.forEach(function (s, i) { var o = document.createElement("option"); o.value = i; o.textContent = s.name; demo.appendChild(o); });
+  var fields = { name: "f-name", short: "f-short", c1: "f-c1", c2: "f-c2", thanks: "f-thanks", d1: "f-d1", d2: "f-d2", values: "f-values", outro: "f-outro" };
+  function fillForm() { Object.keys(fields).forEach(function (k) { document.getElementById(fields[k]).value = state[k]; }); }
+  demo.addEventListener("change", function () { state = Object.assign({}, SCHOOLS[demo.value]); customCrest = null; document.getElementById("f-crest").value = ""; fillForm(); applySchool(); });
+  Object.keys(fields).forEach(function (k) {
+    document.getElementById(fields[k]).addEventListener("input", function (e) { state[k] = e.target.value; applySchool(); });
+  });
+  document.getElementById("f-crest").addEventListener("change", function (e) {
+    var f = e.target.files && e.target.files[0]; if (!f) return;
+    var r = new FileReader(); r.onload = function () { customCrest = r.result; applySchool(); }; r.readAsDataURL(f);
+  });
+  document.getElementById("schoolform").addEventListener("submit", function (e) { e.preventDefault(); });
+
+  fillForm();
+  applySchool();
+})();
+</script>
